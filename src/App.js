@@ -23,7 +23,8 @@ class App extends Component {
     })
     .then(json => {
       if(json){
-        const mostRecentDateTime = Object.keys(json["Time Series (60min)"]).slice(-1)[0]
+        console.log(Object.keys(json["Time Series (60min)"]));
+        const mostRecentDateTime = Object.keys(json["Time Series (60min)"])[0]
         const closingPrice = json["Time Series (60min)"][mostRecentDateTime]["4. close"]
         this.setState({shareprice: closingPrice})
       }
