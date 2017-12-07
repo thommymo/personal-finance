@@ -13,7 +13,7 @@ class App extends Component {
     const url=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${this.state.symbol}&interval=60min&outputsize=compact&apikey=${process.env.REACT_APP_GRAPHQL_URI}`
     fetch(url, {mode: 'cors'})
     .then((response) => {
-      if (response.status >= 200 && response.status < 300) {
+      if (!response.ok) {
         console.log('Looks like there was a problem. Status Code: ' +
           response.status);
         return;
