@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import idb from 'idb'
+import { LineChart, Line } from 'recharts'
 
 class App extends Component {
   constructor(){
     super()
     this.state = {
       shareprice: "loading",
-      symbol: "LUKN"
+      symbol: "LUKN",
+      allData: {}
     }
   }
 
   componentDidMount(){
-    const url=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${this.state.symbol}&interval=60min&outputsize=compact&apikey=${process.env.REACT_APP_GRAPHQL_URI}`
+    const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
+    //const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=MSFT&apikey=demo`
+
     //Get Data from IndexedDB
     //Let's assume for now that the data is never updated (TODO: Do this when data updates)
     idb.open('stock-price-db', 1, (upgradeDB) => {
@@ -34,15 +38,15 @@ class App extends Component {
       if(data){
         putDataInState(data)
       }else{
-        getDataFromAPI(url, db)
+        getDataFromAPI(url)
       }
     })
     .catch(e => console.log(e))
 
     const putDataInState = (obj) => {
-      const mostRecentDateTime = Object.keys(obj["Time Series (60min)"])[0]
-      const closingPrice = obj["Time Series (60min)"][mostRecentDateTime]["4. close"]
-      this.setState({shareprice: closingPrice})
+      const mostRecentDateTime = Object.keys(obj["Monthly Adjusted Time Series"])[0]
+      const closingPrice = obj["Monthly Adjusted Time Series"][mostRecentDateTime]["5. adjusted close"]
+      this.setState({shareprice: closingPrice, allData: obj})
     }
 
     const getDataFromAPI = (url) => {
@@ -68,7 +72,13 @@ class App extends Component {
       .catch(e => {console.log(e)})
     }
   }
+
   render() {
+    if (this.state.shareprice !== "loading"){
+      var data = Object.keys(this.state.allData["Monthly Adjusted Time Series"]).map(
+        (currentValue, index, array) => {
+        return { name: currentValue, value: parseInt(this.state.allData["Monthly Adjusted Time Series"][currentValue]["5. adjusted close"]) } } )
+    }
     return (
       <div className="App">
         <header className="App-header">
@@ -78,6 +88,9 @@ class App extends Component {
           Currency: CHF
           <span> {this.state.shareprice}</span>
         </p>
+        <LineChart width={1400} height={800} data={data}>
+          <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        </LineChart>
       </div>
     )
   }
