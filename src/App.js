@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import idb from 'idb'
-import { LineChart, Line } from 'recharts'
+import { LineChart, Line, CartesianGrid, Tooltip, Legend, XAxis, YAxis} from 'recharts'
+import styled from 'styled-components'
+import * as d3 from 'd3'
 
 class App extends Component {
   constructor(){
     super()
     this.state = {
       shareprice: "loading",
-      symbol: "LUKN",
+      symbol: "JNK",
       allData: {}
     }
   }
 
   componentDidMount(){
-    const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=AAPL&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
+    const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${this.state.symbol}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
     //const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=MSFT&apikey=demo`
 
     //Get Data from IndexedDB
@@ -75,10 +77,17 @@ class App extends Component {
 
   render() {
     if (this.state.shareprice !== "loading"){
+      console.log(this.state.allDatas)
       var data = Object.keys(this.state.allData["Monthly Adjusted Time Series"]).map(
         (currentValue, index, array) => {
-        return { name: currentValue, value: parseInt(this.state.allData["Monthly Adjusted Time Series"][currentValue]["5. adjusted close"]) } } )
+        return { name: currentValue, value: parseFloat(this.state.allData["Monthly Adjusted Time Series"][currentValue]["5. adjusted close"]) } } )
+        data.reverse()
+        //imported d3 just for this (I'm not sure why this is necessary, since recharts does use d3)
+        var cardinal = d3.curveCatmullRom.alpha(0);
+        console.log(data)
     }
+
+
     return (
       <div className="App">
         <header className="App-header">
@@ -88,12 +97,21 @@ class App extends Component {
           Currency: CHF
           <span> {this.state.shareprice}</span>
         </p>
-        <LineChart width={1400} height={800} data={data}>
-          <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        </LineChart>
+        <StyledLineChart width={1400} height={800} data={data}>
+          <Tooltip />
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+          <Line type={cardinal} dataKey="value" stroke="#8884d8" />
+          <Legend />
+          <XAxis dataKey="name" />
+          <YAxis />
+        </StyledLineChart>
       </div>
     )
   }
 }
+
+const StyledLineChart = styled(LineChart)`
+  margin:10px;
+`
 
 export default App
