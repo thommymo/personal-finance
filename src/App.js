@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import idb from 'idb'
-import { LineChart, Line, CartesianGrid, Tooltip, Legend, XAxis, YAxis} from 'recharts'
+import LineChartWithData from './linechartwithdata'
 import styled from 'styled-components'
-import * as d3 from 'd3'
+
+const portfolio =  {
+  JNK: {
+    count: 100,
+  },
+  SMI: {
+    count: 100,
+  },
+  AAPL: {
+    count: 50
+  }
+}
 
 class App extends Component {
   constructor(){
@@ -35,7 +46,6 @@ class App extends Component {
       return keyValStore.get('shareprices')
     })
     .then((data) => {
-      console.log(data);
       //Check if DB contains data i need
       if(data){
         putDataInState(data)
@@ -77,41 +87,30 @@ class App extends Component {
 
   render() {
     if (this.state.shareprice !== "loading"){
-      console.log(this.state.allDatas)
-      var data = Object.keys(this.state.allData["Monthly Adjusted Time Series"]).map(
+      const allDates = Object.keys(this.state.allData["Monthly Adjusted Time Series"])
+      const firstValueforNormalization = parseFloat(this.state.allData["Monthly Adjusted Time Series"][allDates[(allDates.length-1)]]["5. adjusted close"])
+      const normalizationFactor = 100/firstValueforNormalization
+      var data = allDates.map(
         (currentValue, index, array) => {
-        return { name: currentValue, value: parseFloat(this.state.allData["Monthly Adjusted Time Series"][currentValue]["5. adjusted close"]) } } )
+        return { name: currentValue, value: (parseFloat(this.state.allData["Monthly Adjusted Time Series"][currentValue]["5. adjusted close"])*normalizationFactor) } } )
         data.reverse()
         //imported d3 just for this (I'm not sure why this is necessary, since recharts does use d3)
-        var cardinal = d3.curveCatmullRom.alpha(0);
-        console.log(data)
     }
 
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">This is the most recent share price for shares with this symbol: {this.state.symbol}</h1>
+      <div>
+        <header>
+          <h1>This is the most recent share price for shares with this symbol: {this.state.symbol}</h1>
         </header>
-        <p className="App-intro">
+        <p>
           Currency: CHF
           <span> {this.state.shareprice}</span>
         </p>
-        <StyledLineChart width={1400} height={800} data={data}>
-          <Tooltip />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-          <Line type={cardinal} dataKey="value" stroke="#8884d8" />
-          <Legend />
-          <XAxis dataKey="name" />
-          <YAxis />
-        </StyledLineChart>
+        <LineChartWithData data={data}/>
       </div>
     )
   }
 }
-
-const StyledLineChart = styled(LineChart)`
-  margin:10px;
-`
 
 export default App
