@@ -65,7 +65,7 @@ export default class LineChartWithData extends Component {
 
   render(){
     //TODO: imported d3 just for this (I'm not sure why this is necessary, since recharts does use d3)
-    var cardinal = d3.curveCatmullRom.alpha(1);
+    var cardinal = d3.curveCardinal.tension(0.3);
     var data = {}
     if(this.props.data){
       data = this.normalizeData(this.props.data)
