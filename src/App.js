@@ -21,48 +21,42 @@ class App extends Component {
     this.state = {
       shareprice: "loading",
       symbol: "JNK",
-      allData: {}
+      allData: {},
+      symbols: []
     }
   }
 
   componentDidMount(){
-    const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${this.state.symbol}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
-    //const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=MSFT&apikey=demo`
+    //foreach Symbol, get Data and put it into client side storage
+    var symbols = ['JNK','AAPL','MSFT','XAU','SMI']
+    this.getData(symbols).then(data => {
+      for(let share of Object.keys(data)){
 
-    //Get Data from IndexedDB
-    //Let's assume for now that the data is never updated (TODO: Do this when data updates)
-    idb.open('stock-price-db', 1, (upgradeDB) => {
-      //This function is only performed, if there is no indexedDB with the name 'stock-price-db'
-      //Here I'll create a key-value-store
-      var keyValStore = upgradeDB.createObjectStore('keyval')
-      //Here I'll add a value to my key-value-store
-      //Notice that .put() takes first the value and then the key
-      keyValStore.put(undefined, 'shareprice')
-    })
-    .then((db) => {
-      //get Data from IndexedDB
-      var tx = db.transaction('keyval')
-      var keyValStore = tx.objectStore('keyval')
-      return keyValStore.get('shareprices')
-    })
-    .then((data) => {
-      //Check if DB contains data i need
-      if(data){
-        putDataInState(data)
-      }else{
-        getDataFromAPI(url)
+        data[share].then(data => {
+          console.log((data))
+          let newData = this.state.allData
+          newData[share] = data
+          let symbols = this.state.symbols
+          symbols.push(share)
+          console.log(symbols);
+          this.setState({shareprice: "loaded", allData: newData, symbols: symbols})
+          }
+        )
       }
+      //TODO: Exception handling
     })
-    .catch(e => console.log(e))
 
-    const putDataInState = (obj) => {
-      const mostRecentDateTime = Object.keys(obj["Monthly Adjusted Time Series"])[0]
-      const closingPrice = obj["Monthly Adjusted Time Series"][mostRecentDateTime]["5. adjusted close"]
-      this.setState({shareprice: closingPrice, allData: obj})
-    }
+  }
 
-    const getDataFromAPI = (url) => {
-      fetch(url, {mode: 'cors'})
+  //Get Data from IndexedDB
+  //Let's assume for now that the data is never updated (TODO: Do this when data updates)
+
+  getData = (symbols) => {
+
+    const getDataFromAPI = (symbol) => {
+      const url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${symbol}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
+
+      return fetch(url, {mode: 'cors'})
       .then((response) => {
         if (!response.ok) {
           console.log('Looks like there was a problem. Status Code: ' + response.status);
@@ -72,32 +66,56 @@ class App extends Component {
         }
       })
       .then(json => {
-        //getDataInState(json);
         var dbPromise =  idb.open('stock-price-db', 1, (upgradeDB) => {})
         dbPromise.then( db => {
           var tx = db.transaction('keyval','readwrite')
           var keyValStore = tx.objectStore('keyval')
-            keyValStore.put(json, 'shareprices')
+            //Here I'll add a value to my key-value-store
+            //Notice that .put() takes first the value and then the key
+            keyValStore.put(json, json["Meta Data"]["2. Symbol"])
         })
-        putDataInState(json)
+        console.log(json["Monthly Adjusted Time Series"]);
+        return json["Monthly Adjusted Time Series"]
       })
       .catch(e => {console.log(e)})
     }
+
+    return new Promise (
+      (resolve, reject) => {
+        var allData = { }
+        for(let symbol of symbols){
+          allData[symbol] = idb.open('stock-price-db', 1, (upgradeDB) => {
+            //This function is only performed, if there is no indexedDB with the name 'stock-price-db'
+            //Here I'll create a key-value-store
+            var keyValStore = upgradeDB.createObjectStore('keyval')
+            //keyValStore.put(undefined, 'shareprices')
+          })
+          .then((db) => {
+            //get Data from IndexedDB
+            var tx = db.transaction('keyval')
+            var keyValStore = tx.objectStore('keyval')
+            return keyValStore.get(symbol)
+          })
+          .then((data) => {
+            //Check if DB contains data i need
+            if(data){
+              //returns data
+              return data["Monthly Adjusted Time Series"]
+            }else{
+              //returns promise to deliver data
+              return getDataFromAPI(symbol)
+            }
+          })
+          .catch(e => console.log(e))
+        }
+        resolve(allData)
+      }
+    )
+
+
   }
 
   render() {
-    if (this.state.shareprice !== "loading"){
-      const allDates = Object.keys(this.state.allData["Monthly Adjusted Time Series"])
-      const firstValueforNormalization = parseFloat(this.state.allData["Monthly Adjusted Time Series"][allDates[(allDates.length-1)]]["5. adjusted close"])
-      const normalizationFactor = 100/firstValueforNormalization
-      var data = allDates.map(
-        (currentValue, index, array) => {
-        return { name: currentValue, value: (parseFloat(this.state.allData["Monthly Adjusted Time Series"][currentValue]["5. adjusted close"])*normalizationFactor) } } )
-        data.reverse()
-        //imported d3 just for this (I'm not sure why this is necessary, since recharts does use d3)
-    }
-
-
     return (
       <div>
         <header>
@@ -107,7 +125,7 @@ class App extends Component {
           Currency: CHF
           <span> {this.state.shareprice}</span>
         </p>
-        <LineChartWithData data={data}/>
+        <LineChartWithData loadingStatus={this.state.shareprice} data={this.state.allData} symbols={this.state.symbols}/>
       </div>
     )
   }
