@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { LineChart, Line, CartesianGrid, Tooltip, Legend, XAxis, YAxis} from 'recharts'
+import { ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend, XAxis, YAxis} from 'recharts'
 import * as d3 from 'd3'
 
 export default class LineChartWithData extends Component {
@@ -72,25 +72,26 @@ export default class LineChartWithData extends Component {
     }
     return(
       //TODO: this.normalizeData has to be moved in it's own component (maybe together with all that is in app.js now )
-      <LineChart width={1400} height={800} data={data}>
-        <Tooltip />
-        <CartesianGrid stroke="#ddd" strokeDasharray="2 5"/>
+      <ResponsiveContainer width="80%" height={200}>
+        <LineChart data={data}>
+          <Tooltip />
+          <CartesianGrid stroke="#ddd" strokeDasharray="2 5"/>
+          {/*
 
-        {/*
+            TODO: should not rerender, when new data arrives, should just update
+            HINT: its not rerendering if I do not wrap the Line Component in a map function
 
-          TODO: should not rerender, when new data arrives, should just update
-          HINT: its not rerendering if I do not wrap this in a map function
+          */}
+          { this.props.symbols.map(symbol => (
+            <Line key={symbol} type={cardinal} dataKey={symbol} stroke="#8884d8" strokeWidth="2" dot={false} activeDot={{ stroke: 'red', strokeWidth: 2, r: 3 }} />
+          ))}
+          <Line type={cardinal} dataKey="Average" stroke="black" strokeWidth="3" dot={false} activeDot={{ stroke: 'red', strokeWidth: 2, r: 3 }} />
 
-        */}
-        { this.props.symbols.map(symbol => (
-          <Line key={symbol} type={cardinal} dataKey={symbol} stroke="#8884d8" strokeWidth="3" dot={false} activeDot={{ stroke: 'red', strokeWidth: 2, r: 3 }} />
-        ))}
-        <Line type={cardinal} dataKey="Average" stroke="black" strokeWidth="3" dot={false} activeDot={{ stroke: 'red', strokeWidth: 2, r: 3 }} />
-
-        <Legend />
-        <XAxis dataKey="name" />
-        <YAxis tickCount={20} domain={[0, 200]} ticks={[0,10,20,30,40,50,100]}/>
-      </LineChart>
+          <Legend />
+          <XAxis dataKey="name" />
+          <YAxis tickCount={20} domain={[0, 200]} ticks={[0,10,20,30,40,50,100]}/>
+        </LineChart>
+      </ResponsiveContainer>
     )
   }
 }
