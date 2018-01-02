@@ -2,18 +2,15 @@ import React, { Component } from 'react'
 import idb from 'idb'
 import LineChartWithData from './linechartwithdata'
 import styled from 'styled-components'
+import {PieChart, Pie} from 'recharts'
 
-const portfolio =  {
-  JNK: {
-    count: 100,
-  },
-  SMI: {
-    count: 100,
-  },
-  AAPL: {
-    count: 50
-  }
-}
+const portfolio =  [
+  { name: "JNK", value: 100 },
+  { name: "AAPL", value: 100 },
+  { name: "MSFT", value: 100 },
+  { name: "XAU", value: 100 },
+  { name: "SMI", value: 100 },
+]
 
 class App extends Component {
   constructor(){
@@ -119,12 +116,18 @@ class App extends Component {
     return (
       <div>
         <header>
-          <h1>This is the most recent share price for shares with this symbol: {this.state.symbol}</h1>
+          <h1>This is your Portfolio</h1>
         </header>
-        <p>
-          Currency: CHF
-          <span> {this.state.shareprice}</span>
-        </p>
+        <h2>
+          Your Portfolio
+        </h2>
+        <PieChart width={730} height={250}>
+          <Pie data={portfolio} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" />
+          <Pie data={portfolio} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label />
+        </PieChart>
+        <h2>
+          Your Performance
+        </h2>
         <LineChartWithData loadingStatus={this.state.shareprice} data={this.state.allData} symbols={this.state.symbols}/>
       </div>
     )
