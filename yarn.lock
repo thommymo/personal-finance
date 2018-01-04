@@ -3175,6 +3175,10 @@ he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
+highcharts@^5.0.0:
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-5.0.14.tgz#0ef14cca9f1345408568b533dae1478950d96810"
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -3346,6 +3350,10 @@ ieee754@^1.1.4:
 ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
+
+immutable-is@^3.7.6:
+  version "3.7.6"
+  resolved "https://registry.yarnpkg.com/immutable-is/-/immutable-is-3.7.6.tgz#efad8bcf21443392402e10fa08b7aa91b65f6c30"
 
 import-local@^0.1.1:
   version "0.1.1"
@@ -3529,6 +3537,10 @@ is-glob@^3.1.0:
   resolved "https://registry.yarnpkg.com/is-glob/-/is-glob-3.1.0.tgz#7ba5ae24217804ac70707b96922567486cc3e84a"
   dependencies:
     is-extglob "^2.1.0"
+
+is-immutable@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-immutable/-/is-immutable-1.0.1.tgz#0b72499d2134c0344fd3b4e24f3f0a0125b70148"
 
 is-npm@^1.0.0:
   version "1.0.0"
@@ -5404,6 +5416,20 @@ react-dom@^16.2.0:
 react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
+
+react-jsx-highcharts@2.0.3, react-jsx-highcharts@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-jsx-highcharts/-/react-jsx-highcharts-2.0.3.tgz#060d690bd9c4f311c385c055a6810772eaeea0c0"
+  dependencies:
+    immutable-is "^3.7.6"
+    is-immutable "^1.0.1"
+    lodash "^4.17.4"
+
+react-jsx-highstock@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-jsx-highstock/-/react-jsx-highstock-2.0.3.tgz#4c1e2f9e4df3cad209da34a9419f21d5324fa219"
+  dependencies:
+    react-jsx-highcharts "2.0.3"
 
 react-resize-detector@1.1.0:
   version "1.1.0"
