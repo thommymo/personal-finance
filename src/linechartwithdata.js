@@ -87,7 +87,6 @@ class LineChartWithData extends Component {
               { symbols.map(symbol => (
                 <AreaSplineSeries id={symbol} name={symbol} data={data[symbol]} key={symbol} />
               ))}
-              {/* <AreaSplineSeries id="wefewf" name="SEFSEF" data={[1, 3, 4, 3, 3, 5, 4]} /> */}
             </YAxis>
           </HighchartsStockChart>
 
