@@ -26,15 +26,20 @@ class LineChartWithData extends Component {
   }
 
   normalizeData(data){
-    console.log(this.props.data);
+    const start = new Date("2007-12-30").getTime()
     if (this.props.loadingStatus === "loaded"){
       var normalizedData = []
       var symbols = Object.keys(this.props.data)
       for (let symbol of symbols){
         normalizedData[symbol] = Object.keys(this.props.data[symbol]).map(date => {
-          return [ /*date*/new Date(date).getTime(), /*adjusted closing value*/parseFloat(this.props.data[symbol][date]["5. adjusted close"]) ]
+          var timestamp = new Date(date).getTime()
+          if(start<timestamp){
+            return [ /*date*/timestamp, /*adjusted closing value*/parseFloat(this.props.data[symbol][date]["5. adjusted close"]) ]
+          }
         })
         normalizedData[symbol].sort((a,b) => (a[0]-b[0]))
+        //TODO: Get first Value to normalize everything
+        //Maybe there is another way: See https://forum.highcharts.com/highcharts-usage/normalize-data-for-highcharts-t36071/
       }
       return normalizedData
     }
