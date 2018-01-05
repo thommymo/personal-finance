@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import * as d3 from 'd3'
 import Highcharts from 'highcharts/highstock';
 import {
-  HighchartsStockChart, Chart, withHighcharts, XAxis, YAxis, Title, AreaSplineSeries, FlagSeries, Navigator, PlotBand
+  HighchartsStockChart, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, LineSeries, FlagSeries, Navigator, PlotBand
 } from 'react-jsx-highstock';
 
 
@@ -80,19 +80,21 @@ class LineChartWithData extends Component {
 
       return(
         //TODO: this.normalizeData has to be moved in it's own component (maybe together with all that is in app.js now )
-
           <HighchartsStockChart>
             <Chart zoomType="x" />
             <Title>Highstocks example</Title>
             <XAxis>
               <XAxis.Title>Time</XAxis.Title>
             </XAxis>
-            <YAxis id="price">
-              <YAxis.Title>Price</YAxis.Title>
-              { symbols.map(symbol => (
-                <AreaSplineSeries id={symbol} name={symbol} data={data[symbol]} key={symbol} />
-              ))}
-            </YAxis>
+            <Tooltip valueSuffix=" CHF" shared valueDecimals={2}/>
+
+
+            { symbols.map(symbol => (
+              <YAxis id={symbol}>
+                <LineSeries id={symbol} name={symbol} data={data[symbol]} key={symbol} tooltip={{valueDecimals: 2}}/>
+              </YAxis>
+            ))}
+
           </HighchartsStockChart>
 
           )
