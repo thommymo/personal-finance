@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import idb from 'idb'
 import LineChartWithData from './linechartwithdata'
-import styled from 'styled-components'
-import {PieChart, Pie, Tooltip, LabelList, Legend, Label} from 'recharts'
+import {PieChart, Pie, LabelList, Label} from 'recharts'
 
 const portfolio =  [
   { name: "JNK", value: 20, description: "US Junk Bonds", type: "bond" },
@@ -16,8 +15,7 @@ const portfolio =  [
   { name: "True Wealth", value: 86, description: "Cash", type: "cash", denomination: "EUR"  },
   { name: "FTAL:LN", value: 17, description: "SPDR® FTSE UK All Share UCITS ETF", type: "cash", denomination: "GBP"  },
   { name: "EXSA:TH", value: 17, description: "SPDR® FTSE UK All Share UCITS ETF", type: "cash", denomination: "GBP"  },
-
-  { name: "ABL", value: 20, description: "Cash", type: "private loan" },
+  { name: "ABL", value: 20, description: "Cash", type: "private loan", denomination: "CHF"  },
 ]
 
 const types = portfolio.reduce((accumulator, value) => {
@@ -157,7 +155,7 @@ class App extends Component {
           allData[symbol.symbol] = idb.open('stock-price-db', 1, (upgradeDB) => {
             //This function is only performed, if there is no indexedDB with the name 'stock-price-db'
             //Here I'll create a key-value-store
-            var keyValStore = upgradeDB.createObjectStore('keyval')
+            upgradeDB.createObjectStore('keyval')
             //keyValStore.put(undefined, 'shareprices')
           })
           .then((db) => {
