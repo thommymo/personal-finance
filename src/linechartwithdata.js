@@ -24,14 +24,21 @@ class LineChartWithData extends Component {
       var transformedData = []
       var symbols = Object.keys(this.props.data)
       for (let symbol of symbols){
-        transformedData[symbol] = Object.keys(this.props.data[symbol]).map(date => {
+        transformedData[symbol] = Object.keys(this.props.data[symbol])
+        .filter(date => {
           var timestamp = new Date(date).getTime()
           if(start<timestamp){
-            return [
-              timestamp,
-              parseFloat(this.props.data[symbol][date]["5. adjusted close"])
-            ]
+            return true
+          } else {
+            return false
           }
+        })
+        .map(date => {
+          var timestamp = new Date(date).getTime()
+          return [
+            timestamp,
+            parseFloat(this.props.data[symbol][date]["5. adjusted close"])
+          ]
         })
         transformedData[symbol].sort((a,b) => (a[0]-b[0]))
       }
