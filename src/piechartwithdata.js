@@ -43,16 +43,25 @@ const shareValue = {
   SMI:50,
 }
 
-const types = portfolio.reduce((accumulator, value) => {
+const colors = Highcharts.getOptions().colors
+
+const types = portfolio.reduce((accumulator, value, index) => {
  if(accumulator.some((element) => (element.type === value.type))){
    let sum = accumulator.filter((element) => (element.type === value.type))[0]
    sum.y = sum.y + value.y
+   sum.countValues = sum.countValues+1
    return  accumulator.filter((element) => (element.type !== value.type)).concat(sum)
  } else {
-   return  accumulator.concat({ name: value.type+"s", y: value.y, description: value.type+"s", type: value.type})
+   return  accumulator.concat({ name: value.type, y: value.y, description: value.type, type: value.type, color: colors[accumulator.length], countValues: 1})
  }
 },
 [])
+
+const portfolioValues = portfolio.map((value, index) => {
+  let type = types.find(element => (element.type === value.type))
+  let brightness = 0.2 - ( index%4 / type.countValues ) / 5
+  return { name: value.name, y: value.y, type: value.type, color: Highcharts.Color(type.color).brighten(brightness).get()}
+})
 
 const sum = portfolio.reduce((accumulator, value) => {
   if(value.type==="share"){
@@ -68,8 +77,8 @@ class PieChartWithData extends Component {
     return (
       <HighchartsChart>
         <Title>my Portfolio, current (value: {sum})</Title>
-        <PieSeries data={types} size="60%" dataLabels={{color: '#ffffff', distance: -30}}/>
-        <PieSeries data={portfolio}  size="80%" innerSize="60%"/>
+        <PieSeries data={types} size="60%" dataLabels={{color: '#ffffff', distance: -30}} color={types}/>
+        <PieSeries data={portfolioValues} size="80%" innerSize="60%" color={portfolioValues}/>
       </HighchartsChart>
     )
   }
