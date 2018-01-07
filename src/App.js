@@ -1,33 +1,7 @@
 import React, { Component } from 'react'
 import idb from 'idb'
 import LineChartWithData from './linechartwithdata'
-import {PieChart, Pie, LabelList, Label} from 'recharts'
-
-const portfolio =  [
-  { name: "JNK", value: 20, description: "US Junk Bonds", type: "bond" },
-  { name: "AAPL", value: 20, description: "Apple Shares", type: "share" },
-  { name: "MSFT", value: 20, description: "Microsoft Shares", type: "share" },
-  { name: "XAU", value: 20, description: "Junk Bonds", type: "share" },
-  { name: "SMI", value: 20, description: "Junk Bonds", type: "share" },
-  { name: "Postfinance", value: 137, description: "Cash", type: "cash", denomination: "CHF" },
-  { name: "True Wealth", value: 41, description: "Cash", type: "cash", denomination: "GBP"  },
-  { name: "True Wealth", value: 404, description: "Cash", type: "cash", denomination: "USD"  },
-  { name: "True Wealth", value: 86, description: "Cash", type: "cash", denomination: "EUR"  },
-  { name: "FTAL:LN", value: 17, description: "SPDR® FTSE UK All Share UCITS ETF", type: "cash", denomination: "GBP"  },
-  { name: "EXSA:TH", value: 17, description: "SPDR® FTSE UK All Share UCITS ETF", type: "cash", denomination: "GBP"  },
-  { name: "ABL", value: 20, description: "Cash", type: "private loan", denomination: "CHF"  },
-]
-
-const types = portfolio.reduce((accumulator, value) => {
- if(accumulator.some((element) => (element.type === value.type))){
-   let sum = accumulator.filter((element) => (element.type === value.type))[0]
-   sum.value = sum.value + value.value
-   return  accumulator.filter((element) => (element.type !== value.type)).concat(sum)
- } else {
-   return  accumulator.concat({ name: value.type+"s", value: value.value, description: value.type+"s", type: value.type})
- }
-},
-[])
+import PieChartWithData from './piechartwithdata'
 
 class App extends Component {
   constructor(){
@@ -64,8 +38,6 @@ class App extends Component {
       }
       //TODO: Exception handling
     })
-
-
   }
 
   //Get Data from IndexedDB
@@ -192,16 +164,7 @@ class App extends Component {
         <h2>
           Your Portfolio
         </h2>
-        <PieChart width={730} height={250}>
-          <Pie data={types} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" label>
-            <Label value="Pages of my website" offset={0} position="insideBottom" />
-            <LabelList dataKey="value" position="insideBottom" />
-          </Pie>
-          <Pie data={portfolio} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={90} outerRadius={120} fill="#82ca9d">
-            <Label value="Pages of my website" offset={0} position="insideBottom" />
-            <LabelList dataKey="name" position="top" />
-          </Pie>
-        </PieChart>
+        <PieChartWithData/>
         <h2>
           Your Performance
         </h2>

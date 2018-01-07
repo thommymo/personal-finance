@@ -27,11 +27,10 @@ class LineChartWithData extends Component {
         transformedData[symbol] = Object.keys(this.props.data[symbol])
         .filter(date => {
           var timestamp = new Date(date).getTime()
-          if(start<timestamp){
+          if(start<timestamp)
             return true
-          } else {
+          else
             return false
-          }
         })
         .map(date => {
           var timestamp = new Date(date).getTime()
@@ -70,8 +69,8 @@ class LineChartWithData extends Component {
             ))}
           </YAxis>
         </HighchartsStockChart>
-      )
-    }
+    )
   }
+}
 
-  export default withHighcharts(LineChartWithData, Highcharts);
+export default withHighcharts(LineChartWithData, Highcharts);
