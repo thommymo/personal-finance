@@ -7,8 +7,6 @@ import { portfolio, holdingsWithMarketPrice } from './data/data'
 
 /*
 TODO today:
-3. Move UI-Components into proper folder structure
-4. Move Data into proper folder structure
 5. Do Snapshot Testing
 */
 
