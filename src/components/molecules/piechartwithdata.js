@@ -29,7 +29,8 @@ class PieChartWithData extends Component {
       typesOfHoldings: this.getTypesOfHoldings(portfolio),
       holdings: this.getHoldings(portfolio),
       sum: this.getSumOf(portfolio),
-      filter: false
+      filter: false,
+      sumBgColor: theme.colors.black
     })
   }
   getSumOf(portfolio, filter){
@@ -78,7 +79,8 @@ class PieChartWithData extends Component {
          dataLabels: {
            backgroundColor: Highcharts.Color(colors[accumulator.length]).brighten(-0.1).get()
          },
-         countValues: 1
+         countValues: 1,
+         sortOrder: accumulator.length
        })
      }
     },
@@ -90,12 +92,14 @@ class PieChartWithData extends Component {
 
   filterOnClick(filter){
     if(!this.state.filter){
+      const typesOfHoldings = this.getTypesOfHoldings(this.props.portfolio).filter((holding) => (holding.type === filter))
       this.setState(
         {
-          typesOfHoldings: this.getTypesOfHoldings(this.props.portfolio).filter((holding) => (holding.type === filter)),
+          typesOfHoldings,
           holdings: this.getHoldings(this.props.portfolio).filter((holding) => (holding.type === filter)),
           filter: filter,
-          sum: this.getSumOf(this.props.portfolio, filter)
+          sum: this.getSumOf(this.props.portfolio, filter),
+          sumBgColor: theme.colors.chartColors[typesOfHoldings[0].sortOrder]
         }
       )
     } else {
@@ -104,23 +108,26 @@ class PieChartWithData extends Component {
           typesOfHoldings: this.getTypesOfHoldings(this.props.portfolio),
           holdings: this.getHoldings(this.props.portfolio),
           filter: false,
-          sum: this.getSumOf(this.props.portfolio)
+          sum: this.getSumOf(this.props.portfolio),
+          sumBgColor: theme.colors.black
         }
       )
     }
   }
   render() {
     return (
-      <div>
-        <ChartsTitle>
-          <H1Centered>
-            { this.state.filter &&
-              <BackLink onClick={ () => this.filterOnClick({filter: false})}>Your Portfolio</BackLink>
-            }
-            { this.state.filter ? " / " + this.state.filter: "Your Portfolio" }
-          </H1Centered>
-          <H4Centered>{this.state.sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</H4Centered>
-        </ChartsTitle>
+      <StyledPieChartWithData>
+        <TitleHeader>
+          <div>
+            <H1Centered>
+              { this.state.filter &&
+                <BackLink onClick={ () => this.filterOnClick({filter: false})}>Your Portfolio</BackLink>
+              }
+              { this.state.filter ? " / " + this.state.filter: "Your Portfolio" }
+            </H1Centered>
+            <H4Centered bgColor={this.state.sumBgColor}>{this.state.sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</H4Centered>
+          </div>
+        </TitleHeader>
         <HighchartsChart>
           <Chart />
           <PieSeries
@@ -128,12 +135,14 @@ class PieChartWithData extends Component {
             name="Type of Holdings"
             data={this.state.typesOfHoldings}
             size="40%"
+            inside={true}
+            allowPointSelect={true}
             dataLabels={{
               connectorWidth:2,
               color: theme.colors.white,
               allowOverlap: false,
               backgroundColor: this.state.filter ? false: theme.colors.blackTransparent,
-              distance: this.state.filter ? -50: 30,
+              distance: this.state.filter ? -80: 100,
               borderWidth: 5,
               borderColor: "transparent",
 
@@ -171,20 +180,25 @@ class PieChartWithData extends Component {
                 style: {
                   textOutline: false,
                   fontSize: theme.fontSize.p.desktop
-                }
+                },
+
               }: false}
             />
           }
         </HighchartsChart>
-      </div>
+      </StyledPieChartWithData>
     )
   }
 }
 
 export default withHighcharts(PieChartWithData, Highcharts);
 
-const ChartsTitle = styled.div`
-
+const TitleHeader = styled.header`
+  display: flex;
+  justify-content:center;
+`
+const TitleArea = styled.div`
+  flex:1;
 `
 const BackLink = styled.span`
    display: inline-block;
@@ -196,10 +210,17 @@ const BackLink = styled.span`
 `
 const H1Centered = styled.h1`
   text-align: center;
-  display: block;
 `
-const H4Centered = styled.h5`
+const H4Centered = styled.h4`
   text-align: center;
-  display: block-inline;
-  background: ${theme.colors.green};
+  background: ${props => props.bgColor};
+  color: ${theme.colors.white};
+  font-weight: 200;
+  padding:5px;
+`
+const StyledPieChartWithData = styled.div`
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 `
