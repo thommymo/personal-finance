@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import {theme} from './utils/theme'
+import styled from 'styled-components'
 
 import {
-  HighchartsChart, Pie, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, PieSeries
+  HighchartsChart, Pie, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, Subtitle, PieSeries
 } from 'react-jsx-highcharts'
 import Highcharts from 'highcharts'
 
@@ -27,6 +28,7 @@ const portfolio =  [
   { name: "Postfinance 3a Konto", y: 20782, description: "Retirement Cash", type: "retirment cash", denomination: "CHF", interest: 0.3 },
   { name: "Postfinance 3a Konto", y: 21490, description: "Retirement Cash", type: "retirment cash", denomination: "CHF", interest: 0.3 },
   { name: "Postfinance 3a Konto", y: 13616, description: "Retirement Cash", type: "retirment cash", denomination: "CHF", interest: 0.3 },
+  { name: "LUPK Pensionskasse", y: 94000, description: "Retirement Cash", type: "pension fund", denomination: "CHF", interest: 1.5 },
 ]
 
 const denomination = {
@@ -37,7 +39,7 @@ const denomination = {
 }
 
 const shareValue = {
-  JNK:2000,
+  JNK:200,
   AAPL:200,
   MSFT:50,
   XAU:50,
@@ -69,7 +71,7 @@ class PieChartWithData extends Component {
     }
   }
   getSumOf(portfolio, filter){
-    return Math.floor(portfolio
+    return portfolio
            .filter((holding) => (!filter || holding.type === filter))
            .reduce((accumulator, value) => {
               if(value.type==="share"){
@@ -77,7 +79,7 @@ class PieChartWithData extends Component {
               } else {
                 return accumulator+=value.y*denomination[value.denomination]
               }
-            },0))
+            },0)
   }
   getHoldings(portfolio){
     return portfolio.map((holding, index) => {
@@ -105,20 +107,15 @@ class PieChartWithData extends Component {
   getValueInCHF(portfolioElement){
     return portfolioElement.type === "share" ? portfolioElement.y*shareValue[portfolioElement.name] : portfolioElement.y*denomination[portfolioElement.denomination]
   }
-  componentWillMount(){
 
-  }
-  componentDidMount(){
-
-  }
-  onClick(event){
+  onClickFilter(filter){
     if(!this.state.filter){
       this.setState(
         {
-          typesOfHoldings: this.getTypesOfHoldings(portfolio).filter((holding) => (holding.type === event.point.name)),
-          holdings: this.getHoldings(portfolio).filter((holding) => (holding.type === event.point.name)),
-          filter: "cash",
-          sum: this.getSumOf(portfolio, event.point.name)
+          typesOfHoldings: this.getTypesOfHoldings(portfolio).filter((holding) => (holding.type === filter)),
+          holdings: this.getHoldings(portfolio).filter((holding) => (holding.type === filter)),
+          filter: filter,
+          sum: this.getSumOf(portfolio, filter)
         }
       )
     } else {
@@ -134,30 +131,88 @@ class PieChartWithData extends Component {
   }
   render() {
     return (
-      <HighchartsChart>
-        <Title>{`My Portfolio, current (value: CHF ${this.state.sum.toString()} )`}</Title>
-        <PieSeries
-          id="typesOfHoldings"
-          data={this.state.typesOfHoldings}
-          size="40%"
-          dataLabels={{color: '#ffffff', distance: -30}}
-          color={this.state.typesOfHoldings}
-          cursor="pointer"
-          events={{
-            cursor: 'pointer',
-            click: (event) => this.onClick(event),
-          }}/>
-        <PieSeries
-          id="holdings"
-          data={this.state.holdings}
-          size="80%"
-          innerSize="60%"
-          color={this.state.holdings}
-        />
-      </HighchartsChart>
+      <div>
+        <ChartsTitle>
+          <H3Centered>
+            { this.state.filter &&
+              <BackLink onClick={ () => this.onClickFilter({filter: false})}>My Portfolio</BackLink>
+            }
+            { this.state.filter ? " / " + this.state.filter: "My Portfolio" }
+          </H3Centered>
+          <H4Centered>{this.state.sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</H4Centered>
+        </ChartsTitle>
+        <HighchartsChart>
+          <Chart />
+          <PieSeries
+            id="typesOfHoldings"
+            name="Type of Holdings"
+            data={this.state.typesOfHoldings}
+            size="40%"
+            dataLabels={{
+              color: theme.colors.white,
+              allowOverlap: false,
+              backgroundColor: this.state.filter ? false: theme.colors.blackTransparent,
+              defer: false,
+              distance: this.state.filter ? -50: 5,
+              style: {
+                textOutline: false,
+                fontSize: theme.fontSize.p.desktop
+              }
+            }}
+            color={this.state.typesOfHoldings}
+            animation={false}
+            cursor="pointer"
+            events={{
+              cursor: 'pointer',
+              click: (event) => this.onClickFilter(event.point.name),
+            }}/>
+          <PieSeries
+            id="holdings"
+            name="Holdings"
+            data={this.state.holdings}
+            size="80%"
+            innerSize="60%"
+            color={this.state.holdings}
+            animation={false}
+            dataLabels={this.state.filter ? {
+              color: theme.colors.white,
+              allowOverlap: false,
+              backgroundColor: theme.colors.blackTransparent,
+              defer: false,
+              distance:5,
+              style: {
+                textOutline: false,
+                fontSize: theme.fontSize.p.desktop
+              }
+            }: false}
+          />
+
+
+        </HighchartsChart>
+      </div>
     )
   }
 
 }
 
 export default withHighcharts(PieChartWithData, Highcharts);
+
+const ChartsTitle = styled.div`
+
+`
+const BackLink = styled.span`
+
+   display: inline-block;
+   cursor: pointer;
+   text-decoration: underline;
+
+   :hover {
+     color: ${theme.colors.green}
+   }
+`
+const H3Centered = styled.h3`
+  text-align: center;
+`
+const H4Centered = styled.h5`
+  text-align: center;
+`

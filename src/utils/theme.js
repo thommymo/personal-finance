@@ -11,6 +11,9 @@ export const theme = {
     green: "rgba(17, 163, 126, 1)",
     blue: "rgba(45, 99, 198, 1)",
     white: "rgba(253, 253, 250, 1)",
+    whiteTransparent: "rgba(253, 253, 250, 0.9)",
+    blackTransparent: "rgba(20, 20, 15, 0.5)",
+
     fontColor: "rgba(47, 47, 53, 1)"
   },
   fontSize: {
