@@ -5,16 +5,9 @@ import Highcharts from 'highcharts/highstock';
 import {
   HighchartsStockChart, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, LineSeries,
 } from 'react-jsx-highstock';
+import { theme } from '../../utils/theme'
 
-const colors = [
-  "#A11478",
-  "#A1162C",
-  "#A14E18",
-  "#A19919",
-  "#1CA120",
-  "#1EA16A",
-  "#1F91A1",
-]
+const colors = theme.colors.chartColors
 
 class LineChartWithData extends Component {
 
