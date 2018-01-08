@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import idb from 'idb'
 import LineChartWithData from './linechartwithdata'
 import PieChartWithData from './piechartwithdata'
+import './utils/global-css'
 
 class App extends Component {
   constructor(){
