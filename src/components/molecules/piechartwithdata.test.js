@@ -1,8 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PieChartWithData from './piechartwithdata';
+import renderer from 'react-test-renderer'
+import { portfolio } from '../../data/data'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<PieChartWithData />, div);
-});
+it('Shows portfolio as pie chart', () => {
+  const component = renderer.create(
+    <PieChartWithData portfolio={portfolio}/>
+      );
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+})

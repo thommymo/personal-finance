@@ -158,16 +158,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <header>
-          <h1>This is your Portfolio</h1>
-        </header>
-        <h2>
-          Your Portfolio
-        </h2>
-        <PieChartWithData/>
-        <h2>
-          Your Performance
-        </h2>
+        <PieChartWithData portfolio={portfolio}/>
         <LineChartWithData loadingStatus={this.state.shareprice} data={this.state.allData} symbols={this.state.symbols}/>
       </div>
     )

@@ -5,7 +5,7 @@ import {
   HighchartsChart, Pie, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, Subtitle, PieSeries
 } from 'react-jsx-highcharts'
 import Highcharts from 'highcharts'
-import { portfolio, currency, holdingsWithMarketPrice, shareValue } from '../../data/data'
+import { currency, holdingsWithMarketPrice, shareValue } from '../../data/data'
 
 Highcharts.setOptions({
  colors: theme.colors.chartColors
@@ -22,14 +22,15 @@ Highcharts.setOptions({
 const colors = Highcharts.getOptions().colors
 
 class PieChartWithData extends Component {
-  constructor(){
-    super()
-    this.state = {
+
+  componentWillMount(){
+    const portfolio = this.props.portfolio
+    this.setState({
       typesOfHoldings: this.getTypesOfHoldings(portfolio),
       holdings: this.getHoldings(portfolio),
       sum: this.getSumOf(portfolio),
       filter: false
-    }
+    })
   }
   getSumOf(portfolio, filter){
     return portfolio
@@ -87,23 +88,23 @@ class PieChartWithData extends Component {
     return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]*currency[portfolioElement.currency] : portfolioElement.y*currency[portfolioElement.currency]
   }
 
-  onClickFilter(filter){
+  filterOnClick(filter){
     if(!this.state.filter){
       this.setState(
         {
-          typesOfHoldings: this.getTypesOfHoldings(portfolio).filter((holding) => (holding.type === filter)),
-          holdings: this.getHoldings(portfolio).filter((holding) => (holding.type === filter)),
+          typesOfHoldings: this.getTypesOfHoldings(this.props.portfolio).filter((holding) => (holding.type === filter)),
+          holdings: this.getHoldings(this.props.portfolio).filter((holding) => (holding.type === filter)),
           filter: filter,
-          sum: this.getSumOf(portfolio, filter)
+          sum: this.getSumOf(this.props.portfolio, filter)
         }
       )
     } else {
       this.setState(
         {
-          typesOfHoldings: this.getTypesOfHoldings(portfolio),
-          holdings: this.getHoldings(portfolio),
+          typesOfHoldings: this.getTypesOfHoldings(this.props.portfolio),
+          holdings: this.getHoldings(this.props.portfolio),
           filter: false,
-          sum: this.getSumOf(portfolio)
+          sum: this.getSumOf(this.props.portfolio)
         }
       )
     }
@@ -112,12 +113,12 @@ class PieChartWithData extends Component {
     return (
       <div>
         <ChartsTitle>
-          <H3Centered>
+          <H1Centered>
             { this.state.filter &&
-              <BackLink onClick={ () => this.onClickFilter({filter: false})}>My Portfolio</BackLink>
+              <BackLink onClick={ () => this.filterOnClick({filter: false})}>Your Portfolio</BackLink>
             }
-            { this.state.filter ? " / " + this.state.filter: "My Portfolio" }
-          </H3Centered>
+            { this.state.filter ? " / " + this.state.filter: "Your Portfolio" }
+          </H1Centered>
           <H4Centered>{this.state.sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</H4Centered>
         </ChartsTitle>
         <HighchartsChart>
@@ -147,7 +148,7 @@ class PieChartWithData extends Component {
             cursor="pointer"
             events={{
               cursor: 'pointer',
-              click: (event) => this.onClickFilter(event.point.name),
+              click: (event) => this.filterOnClick(event.point.name),
             }}/>
           { this.state.filter &&
             <PieSeries
@@ -174,12 +175,10 @@ class PieChartWithData extends Component {
               }: false}
             />
           }
-
         </HighchartsChart>
       </div>
     )
   }
-
 }
 
 export default withHighcharts(PieChartWithData, Highcharts);
@@ -188,18 +187,19 @@ const ChartsTitle = styled.div`
 
 `
 const BackLink = styled.span`
-
    display: inline-block;
    cursor: pointer;
    text-decoration: underline;
-
    :hover {
      color: ${theme.colors.green}
    }
 `
-const H3Centered = styled.h3`
+const H1Centered = styled.h1`
   text-align: center;
+  display: block;
 `
 const H4Centered = styled.h5`
   text-align: center;
+  display: block-inline;
+  background: ${theme.colors.green};
 `
