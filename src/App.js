@@ -3,6 +3,7 @@ import idb from 'idb'
 import LineChartWithData from './linechartwithdata'
 import PieChartWithData from './piechartwithdata'
 import './utils/global-css'
+import { portfolio, holdingsWithMarketPrice } from './data/data'
 
 /*
 TODO today:
@@ -25,15 +26,10 @@ class App extends Component {
 
   componentDidMount(){
     //foreach Symbol, get Data and put it into client side storage
-    var symbols = [
-      {exchange: "NYSE", symbol: 'JNK', name:"US Junk Bonds"},
-      {exchange: "NYSE", symbol: 'VTI', name:"Vanguard US Total Stock Market Shares Index ETF"},
-      {exchange: "NYSE", symbol: 'VWO', name:"Vanguard FTSE Emerging Markets ETF"},
-      {exchange: "NYSE", symbol: 'VPL', name:"Vanguard FTSE Pacific ETF"},
-      {exchange: "SWX", symbol: 'IE00B7452L46', name:"SPDR® FTSE UK All Share UCITS ETF"},
-      {exchange: "SWX", symbol: 'CH0017142719', name:"UBS ETF (CH) - SMI (CHF)"},
-      {exchange: "SWX", symbol: 'CH0139101593', name:"ZKB Gold ETF A (CHF)"}
-    ]
+    var symbols = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
+
+    console.log(symbols)
+
     this.getData(symbols).then(data => {
       for(let share of Object.keys(data)){
         data[share].then(data => {
@@ -99,7 +95,7 @@ class App extends Component {
       if(symbol.exchange === "NYSE"){
         url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${symbol.symbol}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
       }else{
-        url=`http://localhost:4000/isin/${symbol.symbol}`
+        url=`http://localhost:4000/isin/${symbol.symbol}/${symbol.denomination}`
       }
         return fetch(url, {mode: 'cors'})
         .then((response) => {
