@@ -5,7 +5,7 @@ import {
   HighchartsChart, Pie, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, Subtitle, PieSeries
 } from 'react-jsx-highcharts'
 import Highcharts from 'highcharts'
-import { portfolio, denomination, holdingsWithMarketPrice, shareValue } from '../../data/data'
+import { portfolio, currency, holdingsWithMarketPrice, shareValue } from '../../data/data'
 
 Highcharts.setOptions({
  colors: theme.colors.chartColors
@@ -36,9 +36,9 @@ class PieChartWithData extends Component {
            .filter((holding) => (!filter || holding.type === filter))
            .reduce((accumulator, value) => {
               if(holdingsWithMarketPrice.some(find => find === value.type)){
-                return accumulator+=value.y*shareValue[value.symbol]*denomination[value.denomination]
+                return accumulator+=value.y*shareValue[value.symbol]*currency[value.currency]
               } else {
-                return accumulator+=value.y*denomination[value.denomination]
+                return accumulator+=value.y*currency[value.currency]
               }
             },0)
   }
@@ -84,7 +84,7 @@ class PieChartWithData extends Component {
     [])
   }
   getValueInCHF(portfolioElement){
-    return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]*denomination[portfolioElement.denomination] : portfolioElement.y*denomination[portfolioElement.denomination]
+    return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]*currency[portfolioElement.currency] : portfolioElement.y*currency[portfolioElement.currency]
   }
 
   onClickFilter(filter){

@@ -7,9 +7,9 @@ import { portfolio, holdingsWithMarketPrice } from './data/data'
 
 /*
 TODO today:
-2. Get Jest Running for testing
 3. Move UI-Components into proper folder structure
 4. Move Data into proper folder structure
+5. Do Snapshot Testing
 */
 
 class App extends Component {
@@ -26,8 +26,6 @@ class App extends Component {
   componentDidMount(){
     //foreach Symbol, get Data and put it into client side storage
     var symbols = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
-
-    console.log(symbols)
 
     this.getData(symbols).then(data => {
       for(let share of Object.keys(data)){
@@ -94,7 +92,7 @@ class App extends Component {
       if(symbol.exchange === "NYSE"){
         url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${symbol.symbol}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
       }else{
-        url=`http://localhost:4000/isin/${symbol.symbol}/${symbol.denomination}`
+        url=`http://localhost:4000/isin/${symbol.symbol}/${symbol.currency}`
       }
         return fetch(url, {mode: 'cors'})
         .then((response) => {
