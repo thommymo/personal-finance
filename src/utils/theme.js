@@ -13,7 +13,7 @@ export const theme = {
     white: "rgba(253, 253, 250, 1)",
     whiteTransparent: "rgba(253, 253, 250, 0.9)",
     blackTransparent: "rgba(20, 20, 15, 0.5)",
-
+    chartColors: ['#1687FF', '#39A86B', '#F22E79', '#2CC2D6', '#E51BB9', '#74E51D', '#21A8A3', '#622EF2', '#2EF293', '#F26C2E', '#2EF237', ],
     fontColor: "rgba(47, 47, 53, 1)"
   },
   fontSize: {
