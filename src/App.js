@@ -5,11 +5,6 @@ import PieChartWithData from './components/molecules/piechartwithdata'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
 
-/*
-TODO today:
-5. Do Snapshot Testing
-*/
-
 class App extends Component {
   constructor(){
     super()
