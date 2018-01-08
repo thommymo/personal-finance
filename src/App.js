@@ -4,6 +4,14 @@ import LineChartWithData from './linechartwithdata'
 import PieChartWithData from './piechartwithdata'
 import './utils/global-css'
 
+/*
+TODO today:
+1. Get all Equities into "Your Performance Graph"
+2. Get Jest Running for testing
+3. Move UI-Components into proper folder structure
+4. Move Data into proper folder structure
+*/
+
 class App extends Component {
   constructor(){
     super()
