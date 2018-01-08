@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { theme } from './utils/theme'
+import { theme } from '../../utils/theme'
 import styled from 'styled-components'
 import {
   HighchartsChart, Pie, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, Subtitle, PieSeries
 } from 'react-jsx-highcharts'
 import Highcharts from 'highcharts'
-import { portfolio, denomination, holdingsWithMarketPrice, shareValue } from './data/data'
+import { portfolio, denomination, holdingsWithMarketPrice, shareValue } from '../../data/data'
 
 Highcharts.setOptions({
  colors: theme.colors.chartColors

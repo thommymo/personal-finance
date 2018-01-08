@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import idb from 'idb'
 import LineChartWithData from './linechartwithdata'
-import PieChartWithData from './piechartwithdata'
+import PieChartWithData from './components/molecules/piechartwithdata'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
 
 /*
 TODO today:
-1. Get all Equities into "Your Performance Graph"
 2. Get Jest Running for testing
 3. Move UI-Components into proper folder structure
 4. Move Data into proper folder structure
