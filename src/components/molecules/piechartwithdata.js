@@ -135,11 +135,13 @@ class PieChartWithData extends Component {
               distance: this.state.filter ? -50: 30,
               borderWidth: 5,
               borderColor: "transparent",
+
               style: {
                 textOutline: false,
                 fontSize: theme.fontSize.p.desktop
               }
             }}
+            borderWidth={2}
             animation={false}
             color={this.state.typesOfHoldings}
             cursor="pointer"
@@ -151,6 +153,7 @@ class PieChartWithData extends Component {
             <PieSeries
               id="holdings"
               name="Holdings"
+              borderWidth = {2}
               data={this.state.holdings}
               size="80%"
               innerSize="60%"
