@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import idb from 'idb'
-import LineChartWithData from './linechartwithdata'
+import LineChartWithData from './components/molecules/linechartwithdata'
 import PieChartWithData from './components/molecules/piechartwithdata'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
