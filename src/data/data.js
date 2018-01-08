@@ -4,7 +4,7 @@ export const portfolio =  [
   { name: "Postfinance Privatkonto", y: 13402, description: "Cash", type: "Cash", currency: "CHF" },
   { name: "Postfinance Sparkonto", y: 60806, description: "Cash", type: "Cash", currency: "CHF" },
   { name: "True Wealth GBP Account", y: 41, description: "Cash", type: "Cash", currency: "GBP"  },
-  { name: "True Wealth USD Account", y: 404, description: "Cash", type: "Cash", currency: "USD"  },
+  { name: "True Wealth USD Account", y: 400, description: "Cash", type: "Cash", currency: "USD"  },
   { name: "True Wealth EUR Account", y: 86, description: "Cash", type: "Cash", currency: "EUR"  },
   { name: "True Wealth CHF Account", y: 41, description: "Cash", type: "Cash", currency: "CHF"  },
   { name: "ABL kurzfristig", y: 20300, description: "Cash", type: "Cash", currency: "CHF", interest: 0.1 },
