@@ -1,5 +1,5 @@
 import React from 'react';
-import PieChartWithData from './piechartwithdata';
+import PieChartWithData from './piechart';
 import renderer from 'react-test-renderer'
 import { portfolio } from '../../data/data'
 

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shows portfolio as pie chart 1`] = `
+<div
+  className="sc-EHOje hnVjpU"
+>
+  <header
+    className="sc-bdVaJa jEqhig"
+  >
+    <div>
+      <h1
+        className="sc-bxivhb EYjjH"
+      >
+        Your Portfolio
+      </h1>
+      <h4
+        className="sc-ifAKCX fVgpt"
+      >
+        CHF302,462.82
+      </h4>
+    </div>
+  </header>
+  <div
+    className="chart "
+  />
+</div>
+`;

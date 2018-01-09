@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
 import idb from 'idb'
 import LineChartWithData from './components/molecules/linechartwithdata'
-import PieChartWithData from './components/molecules/piechartwithdata'
+import PieChartWithData from './components/molecules/piechart'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
+
+
+/*
+TODO:
+1. New Structure (Data and Visual representation should be separated)
+2. Clean Coding Principles
+3. Everything should be tested
+*/
 
 class App extends Component {
   constructor(){
@@ -17,7 +25,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-    //foreach Symbol, get Data and put it into client side storage
+    //foreach holding with market data, get Data and put it into client side storage
     var symbols = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
 
     this.getData(symbols).then(data => {
@@ -100,7 +108,7 @@ class App extends Component {
           var dbPromise =  idb.open('stock-price-db', 1, (upgradeDB) => {})
           if(symbol.exchange==="SWX"){
             //Data Structure of data from SWX is diffrent from the one from
-            //NSYE - this is the reason for this function
+            //Alphavantage (NYSE etc.) - this is the reason for this function
             json = convertSWXData(json)
           }
           dbPromise.then( db => {
@@ -135,11 +143,9 @@ class App extends Component {
             //Check if DB contains data i need
             if(data){
               //returns data
-              console.log("datafromAPI", data)
               return data["Monthly Adjusted Time Series"]
             }else{
               //returns promise to deliver data
-              console.log(symbol.symbol,data)
               return getDataFromAPI(symbol)
             }
           })
