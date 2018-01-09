@@ -1,7 +1,7 @@
 export const theme = {
   font: {
-    fontFamily: "Source Sans Pro",
-    url: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200",
+    fontFamily: "Roboto",
+    url: "https://fonts.googleapis.com/css?family=Roboto:400,100",
     serif: "sans-serif"
   },
   colors: {
