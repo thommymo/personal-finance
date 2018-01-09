@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { theme } from '../../utils/theme'
 import styled from 'styled-components'
 import {
-  HighchartsChart, Pie, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, Subtitle, PieSeries
+  HighchartsChart, Chart, withHighcharts, PieSeries
 } from 'react-jsx-highcharts'
 import Highcharts from 'highcharts'
-import { currency, holdingsWithMarketPrice, shareValue } from '../../data/data'
 
 Highcharts.setOptions({
  colors: theme.colors.chartColors
@@ -201,9 +200,6 @@ export default withHighcharts(PieChart, Highcharts);
 const TitleHeader = styled.header`
   display: flex;
   justify-content:center;
-`
-const TitleArea = styled.div`
-  flex:1;
 `
 const BackLink = styled.span`
    display: inline-block;
