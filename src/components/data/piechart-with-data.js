@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { portfolio, currency, holdingsWithMarketPrice, shareValue } from '../../data/data'
 import PieChart from '../../components/molecules/piechart'
 import { connect } from 'react-redux'
-import { fetchExchangeRates } from '../../components/data/actions'
 
 //Data will come from a database later, instead of the import from "../../data/data"
 //
@@ -17,7 +16,6 @@ import { fetchExchangeRates } from '../../components/data/actions'
 
 class PieChartWithData extends Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         { this.props.exchangeRates.isFetching &&
