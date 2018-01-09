@@ -196,6 +196,8 @@ class PieChart extends Component {
 
 export default withHighcharts(PieChart, Highcharts);
 
+
+
 const TitleHeader = styled.header`
   display: flex;
   justify-content:center;

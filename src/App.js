@@ -4,6 +4,9 @@ import LineChartWithData from './components/molecules/linechartwithdata'
 import PieChartWithData from './components/data/piechart-with-data'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
+import { connect } from 'react-redux'
+import { fetchExchangeRates } from './components/data/actions'
+
 
 
 /*
@@ -25,6 +28,9 @@ class App extends Component {
   }
 
   componentDidMount(){
+    const {dispatch} = this.props
+    
+    dispatch(fetchExchangeRates("CHF"))
     //foreach holding with market data, get Data and put it into client side storage
     var symbols = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
 
@@ -166,4 +172,8 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = (state, props) => ({
+  ...state
+});
+
+export default connect(mapStateToProps)(App)
