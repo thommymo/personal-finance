@@ -21,19 +21,20 @@ Highcharts.setOptions({
 
 const colors = Highcharts.getOptions().colors
 
-class PieChartWithData extends Component {
+class PieChart extends Component {
 
   componentWillMount(){
-    const portfolio = this.props.portfolio
+    const { portfolio, holdingsWithMarketPrice, shareValue, currency } = this.props
     this.setState({
-      typesOfHoldings: this.getTypesOfHoldings(portfolio),
-      holdings: this.getHoldings(portfolio),
-      sum: this.getSumOf(portfolio),
+      typesOfHoldings: this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
+      holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
+      sum: this.getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue), //
       filter: false,
       sumBgColor: theme.colors.black
     })
   }
-  getSumOf(portfolio, filter){
+
+  getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue, filter=false){
     return portfolio
            .filter((holding) => (!filter || holding.type === filter))
            .reduce((accumulator, value) => {
@@ -44,11 +45,11 @@ class PieChartWithData extends Component {
               }
             },0)
   }
-  getHoldings(portfolio){
+  getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue){
     return portfolio.map((holding, index) => {
-      let type = this.getTypesOfHoldings(portfolio).find(element => (element.type === holding.type))
+      let type = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).find(element => (element.type === holding.type))
       let brightness = 0.1 - ( index%type.countValues / type.countValues ) / 2
-      const holdingInCHF = this.getValueInCHF(holding)
+      const holdingInCHF = this.getValueInCHF(holding, holdingsWithMarketPrice, currency, shareValue)
       return {
         name: holding.name,
         y: holdingInCHF,
@@ -60,16 +61,17 @@ class PieChartWithData extends Component {
       }
     })
   }
-  getTypesOfHoldings(portfolio){
+
+  getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue){
     return portfolio.reduce((accumulator, holding, index) => {
      if(accumulator.some((element) => (element.type === holding.type))){
        let sum = accumulator.filter((element) => (element.type === holding.type))[0]
-       const holdingInCHF = this.getValueInCHF(holding)
+       const holdingInCHF = this.getValueInCHF(holding, holdingsWithMarketPrice, currency, shareValue)
        sum.y = sum.y + holdingInCHF
        sum.countValues = sum.countValues+1
        return  accumulator.filter((element) => (element.type !== holding.type)).concat(sum)
      } else {
-       const holdingInCHF = this.getValueInCHF(holding)
+       const holdingInCHF = this.getValueInCHF(holding, holdingsWithMarketPrice, currency, shareValue)
        return  accumulator.concat({
          name: holding.type,
          y: holdingInCHF,
@@ -86,29 +88,32 @@ class PieChartWithData extends Component {
     },
     [])
   }
-  getValueInCHF(portfolioElement){
+
+  getValueInCHF(portfolioElement, holdingsWithMarketPrice, currency, shareValue){
+    console.log(portfolioElement, holdingsWithMarketPrice);
     return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]*currency[portfolioElement.currency] : portfolioElement.y*currency[portfolioElement.currency]
   }
 
   filterOnClick(filter){
+    const {portfolio, holdingsWithMarketPrice, shareValue, currency} = this.props
     if(!this.state.filter){
-      const typesOfHoldings = this.getTypesOfHoldings(this.props.portfolio).filter((holding) => (holding.type === filter))
+      const typesOfHoldings = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).filter((holding) => (holding.type === filter))
       this.setState(
         {
           typesOfHoldings,
-          holdings: this.getHoldings(this.props.portfolio).filter((holding) => (holding.type === filter)),
+          holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).filter((holding) => (holding.type === filter)),
           filter: filter,
-          sum: this.getSumOf(this.props.portfolio, filter),
+          sum: this.getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue, filter),
           sumBgColor: theme.colors.chartColors[typesOfHoldings[0].sortOrder]
         }
       )
     } else {
       this.setState(
         {
-          typesOfHoldings: this.getTypesOfHoldings(this.props.portfolio),
-          holdings: this.getHoldings(this.props.portfolio),
+          typesOfHoldings: this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
+          holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
           filter: false,
-          sum: this.getSumOf(this.props.portfolio),
+          sum: this.getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue),
           sumBgColor: theme.colors.black
         }
       )
@@ -191,7 +196,7 @@ class PieChartWithData extends Component {
   }
 }
 
-export default withHighcharts(PieChartWithData, Highcharts);
+export default withHighcharts(PieChart, Highcharts);
 
 const TitleHeader = styled.header`
   display: flex;

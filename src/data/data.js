@@ -1,3 +1,5 @@
+//This is data that will come from a database later
+
 export const portfolio =  [
   { name: "DKB EUR Privatkonto", y: 841, description: "Cash", type: "Cash", currency: "EUR" },
   { name: "Postfinance Privatkonto 2", y: 3361, description: "Cash", type: "Cash", currency: "CHF" },
