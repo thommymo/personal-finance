@@ -15,19 +15,21 @@ import { connect } from 'react-redux'
 */
 
 class PieChartWithData extends Component {
+
   render() {
+    const { exchangeRates } = this.props
     return (
       <div>
-        { this.props.exchangeRates.isFetching &&
+        { exchangeRates.isFetching &&
           <div>Loading</div>
         }
-        { !this.props.exchangeRates.isFetching && !this.props.exchangeRates.rates &&
+        { !exchangeRates.isFetching && !exchangeRates.rates &&
           <div>Error</div>
         }
-        { !this.props.exchangeRates.isFetching && this.props.exchangeRates.rates &&
+        { !exchangeRates.isFetching && exchangeRates.rates &&
           <PieChart
             portfolio={portfolio}
-            currency={this.props.exchangeRates.rates}
+            currency={exchangeRates.rates}
             holdingsWithMarketPrice={holdingsWithMarketPrice}
             shareValue={shareValue}
           />

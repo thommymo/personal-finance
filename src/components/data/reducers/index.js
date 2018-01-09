@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux'
 import {
   REQUEST_EXCHANGE_RATES,
   RECEIVE_EXCHANGE_RATES,
@@ -30,8 +29,6 @@ function exchangeRates(
   }
 }
 
-const rootReducer = combineReducers({
-  exchangeRates,
-})
+const reducers = { exchangeRates }
 
-export default rootReducer
+export default reducers

@@ -29,8 +29,8 @@ class App extends Component {
 
   componentDidMount(){
     const {dispatch} = this.props
-    
     dispatch(fetchExchangeRates("CHF"))
+    
     //foreach holding with market data, get Data and put it into client side storage
     var symbols = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
 

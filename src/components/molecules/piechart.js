@@ -24,6 +24,7 @@ class PieChart extends Component {
 
   componentWillMount(){
     const { portfolio, holdingsWithMarketPrice, shareValue, currency } = this.props
+    console.log(this.props)
     this.setState({
       typesOfHoldings: this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
       holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
@@ -38,9 +39,9 @@ class PieChart extends Component {
            .filter((holding) => (!filter || holding.type === filter))
            .reduce((accumulator, value) => {
               if(holdingsWithMarketPrice.some(find => find === value.type)){
-                return accumulator+=value.y*shareValue[value.symbol]*currency[value.currency]
+                return accumulator+=value.y*shareValue[value.symbol]/currency[value.currency]
               } else {
-                return accumulator+=value.y*currency[value.currency]
+                return accumulator+=value.y/currency[value.currency]
               }
             },0)
   }
@@ -89,7 +90,7 @@ class PieChart extends Component {
   }
 
   getValueInCHF(portfolioElement, holdingsWithMarketPrice, currency, shareValue){
-    return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]*currency[portfolioElement.currency] : portfolioElement.y*currency[portfolioElement.currency]
+    return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]/currency[portfolioElement.currency] : portfolioElement.y/currency[portfolioElement.currency]
   }
 
   filterOnClick(filter){
