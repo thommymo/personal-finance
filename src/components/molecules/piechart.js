@@ -89,7 +89,6 @@ class PieChart extends Component {
   }
 
   getValueInCHF(portfolioElement, holdingsWithMarketPrice, currency, shareValue){
-    console.log(portfolioElement, holdingsWithMarketPrice);
     return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]*currency[portfolioElement.currency] : portfolioElement.y*currency[portfolioElement.currency]
   }
 
