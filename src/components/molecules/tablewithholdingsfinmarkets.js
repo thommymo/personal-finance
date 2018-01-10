@@ -13,7 +13,7 @@ class TableWithHoldingsFinMarkets extends Component {
 
     //TODO: Refactor
     portfolio=portfolio.filter(holding => (holding.type === portfolioSelection))
-    const sum = portfolio.reduce((acc, holding) => (acc+=(holding.y*shareValue[holding.symbol]*exchangeRates[holding.currency])),0)
+    const sum = portfolio.reduce((acc, holding) => (acc+=(holding.y*shareValue[holding.symbol]/exchangeRates[holding.currency])),0)
     return (
       <Table color={color}>
         <tbody>
@@ -30,7 +30,7 @@ class TableWithHoldingsFinMarkets extends Component {
               <TableColumn>{holding.symbol}</TableColumn>
               <TableColumn>{holding.currency}</TableColumn>
               <TableColumnRightAlign>{(holding.y)}</TableColumnRightAlign>
-              <TableColumnRightAlign>{(holding.y*shareValue[holding.symbol]*exchangeRates[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+              <TableColumnRightAlign>{(holding.y*shareValue[holding.symbol]/exchangeRates[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
             </TableRow>
           ))}
           <TableRow>
