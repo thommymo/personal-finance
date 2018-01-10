@@ -9,7 +9,8 @@ import {
 function exchangeRates(
   state = {
     isFetching: false,
-    items: []
+    rates: {},
+    receivedAt: 0
   }, action
 ) {
   switch(action.type){
@@ -22,7 +23,8 @@ function exchangeRates(
       return {
         ...state,
         rates: action.rates,
-        isFetching: false
+        isFetching: false,
+        receivedAt: action.receivedAt
       }
     default:
       return state
@@ -32,7 +34,8 @@ function exchangeRates(
 function marketDataForHoldings(
   state = {
     isFetching: false,
-    items: {}
+    items: {},
+    receivedAt: 0
   }, action
 ) {
   switch(action.type){
@@ -47,7 +50,8 @@ function marketDataForHoldings(
       return {
         ...state,
         items: updatedItems,
-        isFetching: false
+        isFetching: false,
+        receivedAt: action.receivedAt,
       }
     default:
       return state

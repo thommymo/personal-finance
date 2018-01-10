@@ -26,10 +26,20 @@ class App extends Component {
   }
 
   componentDidMount(){
-    const { dispatch } = this.props
-    dispatch(fetchExchangeRates("CHF"))
-    var symbols = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
-    this.props.dispatch(fetchMarketDataForHoldings(symbols))
+    const { dispatch, exchangeRates, marketDataForHoldings} = this.props
+    const yesterday = ((Date.now())-(60 * 60 * 100 * 24)) /* 10060 */
+
+    if(exchangeRates.receivedAt < yesterday){
+      dispatch(fetchExchangeRates("CHF"))
+    }
+
+    const holdingsWithMarketData = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
+    const SymbolsOfHoldingsWithMarketData = holdingsWithMarketData.reduce((acc, holding) => (acc.concat(holding.symbol)),[])
+
+    if(marketDataForHoldings.receivedAt < yesterday || SymbolsOfHoldingsWithMarketData.sort().toString()!== Object.keys(marketDataForHoldings.items).sort().toString()){
+      this.props.dispatch(fetchMarketDataForHoldings(holdingsWithMarketData))
+    }
+
   }
 
   //Get Data from IndexedDB

@@ -34,16 +34,16 @@ const store = createStore(
 
 let persistor = persistStore(store)
 
-const onBeforeLift = () => {
+const onBeforeLift = (persistor) => {
   // take some action before the gate lifts
-  console.log("beforeLift")
+  console.log(persistor)
 }
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate
       loading={<div>Loading Pers Gate</div>}
-      onBeforeLift={onBeforeLift}
+      onBeforeLift={onBeforeLift(persistor)}
       persistor={persistor}
     >
       <App />
