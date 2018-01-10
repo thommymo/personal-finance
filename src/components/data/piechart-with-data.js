@@ -4,7 +4,7 @@ import PieChart from '../../components/molecules/piechart'
 import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
 import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarkets'
-import { setPortfolioSelection } from '../../components/data/actions'
+import { setPortfolioSelection } from '../../actions'
 import LineChart from '../molecules/linechart'
 
 //Data will come from a database later, instead of the import from "../../data/data"

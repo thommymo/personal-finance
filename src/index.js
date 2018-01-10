@@ -8,7 +8,7 @@ import { createLogger } from 'redux-logger'
 import { compose, createStore, applyMiddleware } from 'redux'
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/es/storage'
-import reducers from './components/data/reducers'
+import reducers from './reducers'
 
 import { PersistGate } from 'redux-persist/es/integration/react'
 

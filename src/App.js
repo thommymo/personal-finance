@@ -3,7 +3,7 @@ import PieChartWithData from './components/data/piechart-with-data'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
 import { connect } from 'react-redux'
-import { fetchExchangeRates, fetchMarketDataForHoldings} from './components/data/actions'
+import { fetchExchangeRates, fetchMarketDataForHoldings} from './actions'
 
 class App extends Component {
   constructor(){
