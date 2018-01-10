@@ -29,7 +29,8 @@ function exchangeRates(
 
 function selection(
   state = {
-    holdingsType: "Cash"
+    holdingsType: false,
+    color: false
   }, action
 ) {
   switch(action.type){

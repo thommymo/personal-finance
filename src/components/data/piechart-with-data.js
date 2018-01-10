@@ -3,10 +3,10 @@ import { portfolio, currency, holdingsWithMarketPrice, shareValue } from '../../
 import PieChart from '../../components/molecules/piechart'
 import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
+import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarkets'
 import { setPortfolioSelection } from '../../components/data/actions'
 
 //Data will come from a database later, instead of the import from "../../data/data"
-//
 
 /*
 TODO
@@ -44,11 +44,23 @@ class PieChartWithData extends Component {
             shareValue={shareValue}
           />
         }
-        { !exchangeRates.isFetching && exchangeRates &&
+        { !exchangeRates.isFetching && exchangeRates && holdingsType && !holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
           <TableWithHoldings
             portfolioSelection={holdingsType}
             color={color}
             portfolio={portfolio}
+            currency={exchangeRates}
+            holdingsWithMarketPrice={holdingsWithMarketPrice}
+            shareValue={shareValue}
+          />
+        }
+        { !exchangeRates.isFetching && exchangeRates && holdingsType && holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
+          <TableWithHoldingsFinMarkets
+            portfolioSelection={holdingsType}
+            color={color}
+            shareValue={shareValue}
+            portfolio={portfolio}
+            exchangeRates={exchangeRates}
             currency={exchangeRates}
             holdingsWithMarketPrice={holdingsWithMarketPrice}
             shareValue={shareValue}
