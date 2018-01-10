@@ -34,9 +34,8 @@ const store = createStore(
 
 let persistor = persistStore(store)
 
-const onBeforeLift = (persistor) => {
+const onBeforeLift = () => {
   // take some action before the gate lifts
-  console.log(persistor)
 }
 
 ReactDOM.render(
