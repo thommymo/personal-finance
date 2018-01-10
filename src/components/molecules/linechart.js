@@ -9,7 +9,7 @@ import { theme } from '../../utils/theme'
 
 const colors = theme.colors.chartColors
 
-class LineChartWithData extends Component {
+class LineChart extends Component {
 
   transformDataForHighStocks(data){
     const start = new Date("2007-12-30").getTime()
@@ -66,4 +66,4 @@ class LineChartWithData extends Component {
   }
 }
 
-export default withHighcharts(LineChartWithData, Highcharts);
+export default withHighcharts(LineChart, Highcharts);
