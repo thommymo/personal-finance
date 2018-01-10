@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
 import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarkets'
 import { setPortfolioSelection } from '../../components/data/actions'
-import LineChartWithData from '../../components/data/linechartwithdata'
+import LineChart from '../molecules/linechart'
 
 //Data will come from a database later, instead of the import from "../../data/data"
 
@@ -23,9 +23,13 @@ class PieChartWithData extends Component {
     this.props.dispatch(setPortfolioSelection(holdingsType,color))
   }
   render() {
-    console.log(this.props);
     const { holdingsType, color } = this.props.selection
     const exchangeRates = this.props.exchangeRates.rates
+    const filteredSymbols = portfolio.filter(holding => (holding.type === holdingsType)).map(holding => holding.symbol)
+    const filteredMarketData = filteredSymbols.reduce((acc,symbol)=>{
+        acc[symbol] = this.props.marketDataForHoldings.items[symbol]
+        return acc
+      },{})
     return (
       <div>
         { exchangeRates.isFetching &&
@@ -66,7 +70,7 @@ class PieChartWithData extends Component {
               currency={exchangeRates}
               holdingsWithMarketPrice={holdingsWithMarketPrice}
             />
-            <LineChartWithData symbols={portfolio.filter(holding => holding.type===this.props.selection.holdingsType)}/>
+            <LineChart loadingStatus="loaded" data={filteredMarketData}/>
           </div>
 
         }

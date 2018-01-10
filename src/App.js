@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PieChartWithData from './components/data/piechart-with-data'
 import './utils/global-css'
-import { portfolio } from './data/data'
+import { portfolio, holdingsWithMarketPrice } from './data/data'
 import { connect } from 'react-redux'
-import { fetchExchangeRates } from './components/data/actions'
+import { fetchExchangeRates, fetchMarketDataForHoldings} from './components/data/actions'
 
 
 
@@ -28,6 +28,8 @@ class App extends Component {
   componentDidMount(){
     const { dispatch } = this.props
     dispatch(fetchExchangeRates("CHF"))
+    var symbols = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
+    this.props.dispatch(fetchMarketDataForHoldings(symbols))
   }
 
   //Get Data from IndexedDB

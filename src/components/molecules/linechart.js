@@ -17,7 +17,7 @@ class LineChart extends Component {
       var transformedData = []
       var symbols = Object.keys(this.props.data)
       for (let symbol of symbols){
-        transformedData[symbol] = Object.keys(this.props.data[symbol])
+        transformedData[symbol] = Object.keys(this.props.data[symbol]["Monthly Adjusted Time Series"])
         .filter(date => {
           var timestamp = new Date(date).getTime()
           if(start<timestamp)
@@ -29,7 +29,7 @@ class LineChart extends Component {
           var timestamp = new Date(date).getTime()
           return [
             timestamp,
-            parseFloat(this.props.data[symbol][date]["5. adjusted close"])
+            parseFloat(this.props.data[symbol]["Monthly Adjusted Time Series"][date]["5. adjusted close"])
           ]
         })
         transformedData[symbol].sort((a,b) => (a[0]-b[0]))

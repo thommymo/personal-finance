@@ -5,7 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { createStore, applyMiddleware } from 'redux'
+import { compose, createStore, applyMiddleware } from 'redux'
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/es/storage'
 import reducers from './components/data/reducers'
@@ -21,12 +21,15 @@ const reducer = persistCombineReducers(config, reducers)
 
 const loggerMiddleware = createLogger()
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
   reducer,
+  composeEnhancers(
   applyMiddleware(
-    thunkMiddleware, // lets us dispatch() functions
+    thunkMiddleware,
     loggerMiddleware // neat middleware that logs actions
-  )
+  ))
 )
 
 let persistor = persistStore(store)
