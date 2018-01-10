@@ -24,7 +24,6 @@ class PieChart extends Component {
 
   componentWillMount(){
     const { portfolio, holdingsWithMarketPrice, shareValue, currency } = this.props
-    console.log(this.props)
     this.setState({
       typesOfHoldings: this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
       holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
@@ -94,19 +93,25 @@ class PieChart extends Component {
   }
 
   filterOnClick(filter){
-    const {portfolio, holdingsWithMarketPrice, shareValue, currency} = this.props
+
+    const {portfolio, holdingsWithMarketPrice, shareValue, currency, setPortfolioSelection} = this.props
+
     if(!this.state.filter){
+
       const typesOfHoldings = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).filter((holding) => (holding.type === filter))
+      const color=theme.colors.chartColors[typesOfHoldings[0].sortOrder]
+      setPortfolioSelection(filter,color)
       this.setState(
         {
           typesOfHoldings,
           holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).filter((holding) => (holding.type === filter)),
           filter: filter,
           sum: this.getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue, filter),
-          sumBgColor: theme.colors.chartColors[typesOfHoldings[0].sortOrder]
+          sumBgColor: color
         }
       )
     } else {
+      setPortfolioSelection(false)
       this.setState(
         {
           typesOfHoldings: this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
@@ -149,7 +154,6 @@ class PieChart extends Component {
               distance: this.state.filter ? -80: 100,
               borderWidth: 5,
               borderColor: "transparent",
-
               style: {
                 textOutline: false,
                 fontSize: theme.fontSize.p.desktop
@@ -197,8 +201,6 @@ class PieChart extends Component {
 
 export default withHighcharts(PieChart, Highcharts);
 
-
-
 const TitleHeader = styled.header`
   display: flex;
   justify-content:center;
@@ -222,7 +224,7 @@ const H4Centered = styled.h4`
   padding:5px;
 `
 const StyledPieChartWithData = styled.div`
-  height:100vh;
+  height:90vh;
   display:flex;
   flex-direction:column;
   justify-content:center;

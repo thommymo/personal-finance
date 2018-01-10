@@ -1,5 +1,6 @@
 export const REQUEST_EXCHANGE_RATES = 'REQUEST_EXCHANGE_RATES'
 export const RECEIVE_EXCHANGE_RATES = 'RECEIVE_EXCHANGE_RATES'
+export const SET_PORTFOLIO_SELECTION = 'SET_PORTFOLIO_SELECTION'
 
 export function requestExchangeRates(toCurrency) {
   return {
@@ -14,6 +15,14 @@ export function receiveExchangeRates(toCurrency, json) {
     toCurrency,
     rates: json,
     receivedAt: Date.now()
+  }
+}
+
+export function setPortfolioSelection(holdingsType,color) {
+  return {
+    type: SET_PORTFOLIO_SELECTION,
+    holdingsType,
+    color
   }
 }
 

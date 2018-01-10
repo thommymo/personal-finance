@@ -1,6 +1,7 @@
 import {
   REQUEST_EXCHANGE_RATES,
   RECEIVE_EXCHANGE_RATES,
+  SET_PORTFOLIO_SELECTION,
 } from '../actions'
 
 function exchangeRates(
@@ -11,14 +12,11 @@ function exchangeRates(
 ) {
   switch(action.type){
     case REQUEST_EXCHANGE_RATES:
-      //Load the Values from API
       return {
         ...state,
         isFetching: true
       }
     case RECEIVE_EXCHANGE_RATES:
-      //Load the Values from API
-      console.log(action)
       return {
         ...state,
         rates: action.rates,
@@ -29,6 +27,23 @@ function exchangeRates(
   }
 }
 
-const reducers = { exchangeRates }
+function selection(
+  state = {
+    holdingsType: "Cash"
+  }, action
+) {
+  switch(action.type){
+    case SET_PORTFOLIO_SELECTION:
+      return {
+        ...state,
+        holdingsType: action.holdingsType,
+        color: action.color
+      }
+    default:
+      return state
+  }
+}
+
+const reducers = { exchangeRates, selection }
 
 export default reducers
