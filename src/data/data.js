@@ -33,15 +33,3 @@ export const holdingsWithMarketPrice = [
   "Natural Resources",
   "Real Estate",
 ]
-export const shareValue = {
-  IE00B7452L46:51.12,
-  DE0002635307:39.07,
-  VTI:140.37,
-  VWO:47.86,
-  VPL:75.01,
-  CH0017142719:96.96,
-  CH0139101593:394.20,
-  IE00B4WPHX27:14.34,
-  VNQ:81.05,
-  VNQI: 62.38
-}

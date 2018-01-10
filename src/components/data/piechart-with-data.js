@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { portfolio, holdingsWithMarketPrice, shareValue } from '../../data/data'
+import { portfolio, holdingsWithMarketPrice } from '../../data/data'
 import PieChart from '../../components/molecules/piechart'
 import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
