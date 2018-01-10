@@ -9,13 +9,11 @@ TODO: Styled Table should be a seperate Atom Component
 
 class TableWithHoldingsFinMarkets extends Component {
   render() {
-    var { portfolio, holdingsWithMarketPrice, portfolioSelection, color, shareValue, exchangeRates} = this.props
+    var { portfolio, portfolioSelection, color, shareValue, exchangeRates} = this.props
 
     //TODO: Refactor
     portfolio=portfolio.filter(holding => (holding.type === portfolioSelection))
     const sum = portfolio.reduce((acc, holding) => (acc+=(holding.y*shareValue[holding.symbol]*exchangeRates[holding.currency])),0)
-    const sumInterest = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest)),0)
-    const sumInterestAfterInflation = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest-holding.y*0.008)),0)
     return (
       <Table color={color}>
         <tbody>
@@ -26,8 +24,8 @@ class TableWithHoldingsFinMarkets extends Component {
             <TableColumnHead>Holdings</TableColumnHead>
             <TableColumnHead>Value in CHF</TableColumnHead>
           </TableRow>
-          { portfolio.map(holding => (
-            <TableRow>
+          { portfolio.map((holding, index) => (
+            <TableRow key={index}>
               <TableColumn>{holding.name}</TableColumn>
               <TableColumn>{holding.symbol}</TableColumn>
               <TableColumn>{holding.currency}</TableColumn>

@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import idb from 'idb'
 import LineChart from '../molecules/linechart'
-import PieChartWithData from '../../components/data/piechart-with-data'
 import '../../utils/global-css'
-import { portfolio, holdingsWithMarketPrice } from '../../data/data'
+import { holdingsWithMarketPrice } from '../../data/data'
 import { connect } from 'react-redux'
-import { fetchExchangeRates } from '../../components/data/actions'
 
 
 

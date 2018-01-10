@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { portfolio, currency, holdingsWithMarketPrice, shareValue } from '../../data/data'
+import { portfolio, holdingsWithMarketPrice, shareValue } from '../../data/data'
 import PieChart from '../../components/molecules/piechart'
 import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
@@ -65,7 +65,6 @@ class PieChartWithData extends Component {
               exchangeRates={exchangeRates}
               currency={exchangeRates}
               holdingsWithMarketPrice={holdingsWithMarketPrice}
-              shareValue={shareValue}
             />
             <LineChartWithData symbols={portfolio.filter(holding => holding.type===this.props.selection.holdingsType)}/>
           </div>

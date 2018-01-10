@@ -21,8 +21,8 @@ class TableWithHoldings extends Component {
             <TableColumnHead>2018</TableColumnHead>
             <TableColumnHead>After Inflation</TableColumnHead>
           </TableRow>
-          { portfolio.map(holding => (
-            <TableRow>
+          { portfolio.map((holding, index) => (
+            <TableRow key={index}>
               <TableColumn>{holding.name}</TableColumn>
               <TableColumnRightAlign>{(holding.y).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
               <TableColumnRightAlign>{(holding.interest).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnRightAlign>
