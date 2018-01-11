@@ -2,21 +2,21 @@
 
 exports[`Shows portfolio as pie chart 1`] = `
 <div
-  className="sc-EHOje hnVjpU"
+  className="sc-ifAKCX kXbjbf"
 >
   <header
     className="sc-bdVaJa jEqhig"
   >
     <div>
       <h1
-        className="sc-bxivhb EYjjH"
+        className="sc-htpNat dEQUjC"
       >
         Your Portfolio
       </h1>
       <h4
-        className="sc-ifAKCX fVgpt"
+        className="sc-bxivhb jowYtt"
       >
-        CHF302,462.82
+        CHF302,948.54
       </h4>
     </div>
   </header>

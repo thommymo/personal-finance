@@ -1,4 +1,4 @@
-//This is data that will come from a database later
+//This is just testing data
 
 export const portfolio =  [
   { name: "DKB EUR Privatkonto", y: 841, description: "Cash", type: "Cash", currency: "EUR", interest: 0.002 },
@@ -33,3 +33,11 @@ export const holdingsWithMarketPrice = [
   "Natural Resources",
   "Real Estate",
 ]
+
+export const currency = {
+  "AUD":1.304,"BGN":1.6681,"BRL":3.3221,"CAD":1.2734,"CNY":6.6521,"CZK":21.808,"DKK":6.3513,"GBP":0.75625,"HKD":8.0008,"HRK":6.3533,"HUF":264.32,"IDR":13736,"ILS":3.5078,"INR":65.043,"JPY":113.96,"KRW":1092.5,"MXN":19.727,"MYR":4.0942,"NOK":8.2258,"NZD":1.4204,"PHP":51.705,"PLN":3.5662,"RON":3.9569,"RUB":58.335,"SEK":8.3676,"SGD":1.363,"THB":32.841,"TRY":3.8847,"USD":1.0228,"ZAR":12.726,"EUR":0.85288,"CHF":1
+}
+
+export const shareValue = {
+  "DE0002635307":39.2,"IE00B7452L46":67.79,"IE00B4WPHX27":14.342,"CH0017142719":96.76,"CH0139101593":395.65,"VNQI":62.38,"VPL":75.3,"VWO":47.65,"VNQ":79.52,"VTI":140.73
+}

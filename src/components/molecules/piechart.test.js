@@ -5,8 +5,13 @@ import { portfolio, currency, holdingsWithMarketPrice, shareValue } from '../../
 
 it('Shows portfolio as pie chart', () => {
   const component = renderer.create(
-    <PieChartWithData portfolio={portfolio} currency={currency} holdingsWithMarketPrice={holdingsWithMarketPrice} shareValue={shareValue} />
-      );
+    <PieChartWithData
+      portfolio={portfolio}
+      currency={currency}
+      holdingsWithMarketPrice={holdingsWithMarketPrice}
+      shareValue={shareValue}
+    />
+  );
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 })
