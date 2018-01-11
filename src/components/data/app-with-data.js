@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { portfolio, holdingsWithMarketPrice } from '../../data/data'
-import PieChart from '../../components/molecules/piechart'
+import PieChart from '../molecules/piechart'
 import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
 import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarkets'
@@ -18,7 +18,7 @@ TODO
 5. If New Data from API, show data
 */
 
-class PieChartWithData extends Component {
+class AppWithData extends Component {
   setPortfolioSelection(holdingsType,color){
     this.props.dispatch(setPortfolioSelection(holdingsType,color))
   }
@@ -79,7 +79,6 @@ class PieChartWithData extends Component {
             />
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
-
         }
       </div>
     )
@@ -90,4 +89,4 @@ const mapStateToProps = (state, props) => ({
   ...state
 });
 
-export default connect(mapStateToProps)(PieChartWithData)
+export default connect(mapStateToProps)(AppWithData)

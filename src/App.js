@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PieChartWithData from './components/data/piechart-with-data'
+import AppWithData from './components/data/app-with-data'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
 import { connect } from 'react-redux'
@@ -40,7 +40,7 @@ class App extends Component {
 
   render() {
     return (
-      <PieChartWithData portfolio={portfolio}/>
+      <AppWithData portfolio={portfolio}/>
     )
   }
 }
