@@ -77,7 +77,7 @@ class PieChartWithData extends Component {
               currency={exchangeRates}
               holdingsWithMarketPrice={holdingsWithMarketPrice}
             />
-            <LineChart loadingStatus="loaded" data={filteredMarketData}/>
+            <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
 
         }

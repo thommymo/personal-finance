@@ -6,8 +6,17 @@ import {
   HighchartsStockChart, Chart, withHighcharts, Tooltip, XAxis, YAxis, Title, LineSeries,
 } from 'react-jsx-highstock';
 import { theme } from '../../utils/theme'
+import styled from 'styled-components'
 
 const colors = theme.colors.chartColors
+
+Highcharts.setOptions({
+    chart: {
+        style: {
+            fontFamily: `${theme.font.fontFamily}, ${theme.font.serif}`
+        }
+    }
+});
 
 class LineChart extends Component {
 
@@ -39,6 +48,7 @@ class LineChart extends Component {
   }
 
   render(){
+    const { color, holdingsType } = this.props
     var data = {}
     if(this.props.data){
       data = this.transformDataForHighStocks(this.props.data)
@@ -49,21 +59,36 @@ class LineChart extends Component {
     }
 
     return(
+      <StyledContainer>
         <HighchartsStockChart>
-          <Chart zoomType="x" />
-          <Title>Highstocks example</Title>
-          <XAxis>
-            <XAxis.Title>Time</XAxis.Title>
+          <Chart
+            zoomType="x"
+            backgroundColor={color}
+            textColor='rgba(255,255,255,1)'
+            legendBackgroundColor= 'rgba(0, 0, 0, 0.8)'
+            background2= '#FFFFFF'
+            dataLabelsColor= '#FFFFFF'
+            contrastTextColor= '#FFFFFF'
+            maskColor= 'rgba(255,255,255,0.3)'
+          />
+          <Title style={{color: 'rgba(255,255,255,1)', fontWeight: 400, fontSize:'20px', margin: '10px'}}>{holdingsType}</Title>
+          <XAxis gridLineColor='rgba(255,255,255,0.3)' labels={{style: { color: 'rgba(255,255,255,0.8)' }}}>
+            <XAxis.Title style={{color: 'rgba(255,255,255,0.8)'}}>Time</XAxis.Title>
           </XAxis>
           <Tooltip valueSuffix=" CHF" shared valueDecimals={2}/>
-          <YAxis id="shares-and-bonds">
+          <YAxis id="shares-and-bonds" gridLineColor='rgba(255,255,255,0.3)' tickColor='rgba(255,255,255,0.8)' labels={{style: { color: 'rgba(255,255,255,0.8)' }}}>
             { symbols.map((symbol, index) => (
-              <LineSeries id={symbol} name={symbol} data={data[symbol]} key={symbol} tooltip={{valueDecimals: 2}} compare="percent" color={colors[index]}/>
+              <LineSeries id={symbol} name={symbol} data={data[symbol]} key={symbol} tooltip={{valueDecimals: 2}} compare="percent" color={`rgba(255,255,255,${(index/10)+0.5})`}/>
             ))}
           </YAxis>
         </HighchartsStockChart>
+      </StyledContainer>
     )
   }
 }
 
 export default withHighcharts(LineChart, Highcharts);
+
+const StyledContainer = styled.div`
+  padding:10px;
+`
