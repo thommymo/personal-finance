@@ -3,12 +3,12 @@ import { Table, TableRow, TableColumnHead, TableColumn, TableColumnRightAlign, T
 
 class TableWithHoldings extends Component {
   render() {
-    var { portfolio, holdingsWithMarketPrice, portfolioSelection, color } = this.props
+    var { portfolio, portfolioSelection, color, currency } = this.props
 
     portfolio = portfolio.filter(holding => (holding.type === portfolioSelection))
     const sum = portfolio.reduce((acc, holding) => (acc+=holding.y),0)
-    const sumInterest = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest)),0)
-    const sumInterestAfterInflation = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest-holding.y*0.008)),0)
+    const sumInterest = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest/currency[holding.currency])),0)
+    const sumInterestAfterInflation = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008)),0)
     return (
       <Table color={color}>
         <tbody>
@@ -22,10 +22,10 @@ class TableWithHoldings extends Component {
           { portfolio.map((holding, index) => (
             <TableRow key={index}>
               <TableColumn>{holding.name}</TableColumn>
-              <TableColumnRightAlign>{(holding.y).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+              <TableColumnRightAlign>{(holding.y/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
               <TableColumnRightAlign>{(holding.interest).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnRightAlign>
-              <TableColumnRightAlign>{(holding.y*holding.interest).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
-              <TableColumnRightAlign>{(holding.y*holding.interest-holding.y*0.008).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+              <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+              <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
             </TableRow>
           ))}
           <TableRow>
