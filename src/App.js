@@ -5,6 +5,11 @@ import { portfolio, holdingsWithMarketPrice } from './data/data'
 import { connect } from 'react-redux'
 import { fetchExchangeRates, fetchMarketDataForHoldings} from './actions'
 
+/*
+TODO:
+- prevent rerendering
+*/
+
 class App extends Component {
   constructor(){
     super()
