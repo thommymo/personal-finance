@@ -73,7 +73,6 @@ class AppWithData extends Component {
               shareValue={shareValue}
               portfolio={portfolio}
               exchangeRates={exchangeRates}
-              currency={exchangeRates}
             />
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
