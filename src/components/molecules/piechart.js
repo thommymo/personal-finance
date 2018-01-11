@@ -22,20 +22,8 @@ const colors = Highcharts.getOptions().colors
 
 class PieChart extends Component {
 
-  componentWillMount(){
-    const { portfolio, holdingsWithMarketPrice, shareValue, currency } = this.props
-    this.setState({
-      typesOfHoldings: this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
-      holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
-      sum: this.getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue), //
-      filter: false,
-      sumBgColor: theme.colors.black
-    })
-  }
-
-  getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue, filter=false){
+  getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue){
     return portfolio
-           .filter((holding) => (!filter || holding.type === filter))
            .reduce((accumulator, value) => {
               if(holdingsWithMarketPrice.some(find => find === value.type)){
                 return accumulator+=value.y*shareValue[value.symbol]/currency[value.currency]
@@ -44,9 +32,10 @@ class PieChart extends Component {
               }
             },0)
   }
-  getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue){
+
+  getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue, typesOfHoldings){
     return portfolio.map((holding, index) => {
-      let type = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).find(element => (element.type === holding.type))
+      let type = typesOfHoldings.find(element => (element.type === holding.type))
       let brightness = 0.1 - ( index%type.countValues / type.countValues ) / 2
       const holdingInCHF = this.getValueInCHF(holding, holdingsWithMarketPrice, currency, shareValue)
       return {
@@ -92,49 +81,48 @@ class PieChart extends Component {
     return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]/currency[portfolioElement.currency] : portfolioElement.y/currency[portfolioElement.currency]
   }
 
-  filterOnClick(filter){
+  filterOnClick(clickedFilter){
 
-    const {portfolio, holdingsWithMarketPrice, shareValue, currency, setPortfolioSelection} = this.props
+    const {portfolio, holdingsWithMarketPrice, shareValue, currency, setPortfolioSelection, filter} = this.props
 
-    if(!this.state.filter){
-
-      const typesOfHoldings = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).filter((holding) => (holding.type === filter))
-      const color=theme.colors.chartColors[typesOfHoldings[0].sortOrder]
-      setPortfolioSelection(filter,color)
-      this.setState(
-        {
-          typesOfHoldings,
-          holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).filter((holding) => (holding.type === filter)),
-          filter: filter,
-          sum: this.getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue, filter),
-          sumBgColor: color
-        }
-      )
+    if(!filter){
+      const typesOfHoldings = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue).filter((holding) => (holding.type === clickedFilter))
+      const color = typesOfHoldings[0].color
+      setPortfolioSelection(clickedFilter, color)
     } else {
       setPortfolioSelection(false)
-      this.setState(
-        {
-          typesOfHoldings: this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
-          holdings: this.getHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue),
-          filter: false,
-          sum: this.getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue),
-          sumBgColor: theme.colors.black
-        }
-      )
     }
   }
+
   render() {
+    const { portfolio, holdingsWithMarketPrice, shareValue, currency, filter } = this.props
+
+    let filteredPortfolio
+    if(filter){
+      filteredPortfolio = portfolio.filter(holding => (holding.type === filter))
+    } else {
+      filteredPortfolio = portfolio
+    }
+    let typesOfHoldings = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue)
+    if(filter)  {
+      typesOfHoldings = typesOfHoldings.filter((holding) => (holding.type === filter || !filter))
+    }
+    const holdings = this.getHoldings(filteredPortfolio, holdingsWithMarketPrice, currency, shareValue, typesOfHoldings)
+    const sum = this.getSumOf(filteredPortfolio, holdingsWithMarketPrice, currency, shareValue)
+    const color=theme.colors.chartColors[typesOfHoldings[0].sortOrder]
+    const sumBgColor = filter ? color : theme.colors.black
+
     return (
       <StyledPieChartWithData>
         <TitleHeader>
           <div>
             <H1Centered>
-              { this.state.filter &&
+              { filter &&
                 <BackLink onClick={ () => this.filterOnClick({filter: false})}>Your Portfolio</BackLink>
               }
-              { this.state.filter ? " / " + this.state.filter: "Your Portfolio" }
+              { filter ? " / " + filter: "Your Portfolio" }
             </H1Centered>
-            <H4Centered bgColor={this.state.sumBgColor}>{this.state.sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</H4Centered>
+            <H4Centered bgColor={sumBgColor}>{sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</H4Centered>
           </div>
         </TitleHeader>
         <HighchartsChart>
@@ -142,7 +130,7 @@ class PieChart extends Component {
           <PieSeries
             id="typesOfHoldings"
             name="Type of Holdings"
-            data={this.state.typesOfHoldings}
+            data={typesOfHoldings}
             size="40%"
             inside={true}
             allowPointSelect={true}
@@ -150,8 +138,8 @@ class PieChart extends Component {
               connectorWidth:2,
               color: theme.colors.white,
               allowOverlap: false,
-              backgroundColor: this.state.filter ? false: theme.colors.blackTransparent,
-              distance: this.state.filter ? -80: 100,
+              backgroundColor: filter ? false: theme.colors.blackTransparent,
+              distance: filter ? -80: 100,
               borderWidth: 5,
               borderColor: "transparent",
               style: {
@@ -161,23 +149,23 @@ class PieChart extends Component {
             }}
             borderWidth={2}
             animation={false}
-            color={this.state.typesOfHoldings}
+            color={typesOfHoldings}
             cursor="pointer"
             events={{
               cursor: 'pointer',
               click: (event) => this.filterOnClick(event.point.name),
             }}/>
-          { this.state.filter &&
+          { filter &&
             <PieSeries
               id="holdings"
               name="Holdings"
               borderWidth = {2}
-              data={this.state.holdings}
+              data={holdings}
               size="80%"
               innerSize="60%"
-              color={this.state.holdings}
+              color={holdings}
               animation={true}
-              dataLabels={this.state.filter ? {
+              dataLabels={filter ? {
                 connectorWidth:2,
                 connectorPadding:-4,
                 color: theme.colors.white,
@@ -189,7 +177,6 @@ class PieChart extends Component {
                   textOutline: false,
                   fontSize: theme.fontSize.p.desktop
                 },
-
               }: false}
             />
           }
