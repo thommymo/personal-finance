@@ -47,7 +47,7 @@ class AppWithData extends Component {
           //TODO: Add a beautiful Error state
           <div>Error</div>
         }
-        { !exchangeRates.isFetching && exchangeRates && 
+        { !exchangeRates.isFetching && exchangeRates &&
           <PieChart
             filter={holdingsType}
             setPortfolioSelection={(holdingsType,color)=>this.setPortfolioSelection(holdingsType,color)}
@@ -63,8 +63,6 @@ class AppWithData extends Component {
             color={color}
             portfolio={portfolio}
             currency={exchangeRates}
-            holdingsWithMarketPrice={holdingsWithMarketPrice}
-            shareValue={shareValue}
           />
         }
         { !exchangeRates.isFetching && exchangeRates && holdingsType && holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
