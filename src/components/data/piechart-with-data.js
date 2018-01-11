@@ -26,11 +26,10 @@ class PieChartWithData extends Component {
     const { holdingsType, color } = this.props.selection
     const shareValue = Object.keys(this.props.marketDataForHoldings.items).reduce((acc, symbol)=>{
       const data = this.props.marketDataForHoldings.items[symbol]["Monthly Adjusted Time Series"]
-      const allDates = Object.keys(data)
-      acc[symbol] = data[allDates[(allDates.length-1)]]["5. adjusted close"]
+      const allDates = Object.keys(data).sort((a,b)=>(a > b))
+      acc[symbol] = parseFloat(data[allDates[(allDates.length-1)]]["5. adjusted close"])
       return acc
     },{})
-
 
     const exchangeRates = this.props.exchangeRates.rates
     const filteredSymbols = portfolio.filter(holding => (holding.type === holdingsType)).map(holding => holding.symbol)
