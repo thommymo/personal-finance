@@ -1,5 +1,4 @@
-
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 //import { ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend, XAxis, YAxis} from 'recharts'
 import Highcharts from 'highcharts/highstock';
 import {
@@ -7,8 +6,6 @@ import {
 } from 'react-jsx-highstock';
 import { theme } from '../../utils/theme'
 import styled from 'styled-components'
-
-const colors = theme.colors.chartColors
 
 Highcharts.setOptions({
     chart: {
@@ -18,7 +15,7 @@ Highcharts.setOptions({
     }
 });
 
-class LineChart extends Component {
+class LineChart extends PureComponent {
 
   transformDataForHighStocks(data){
     const start = new Date("2007-12-30").getTime()
@@ -49,13 +46,14 @@ class LineChart extends Component {
 
   render(){
     const { color, holdingsType } = this.props
-    var data = {}
+    let data = {}
+    let symbols=[]
+
     if(this.props.data){
       data = this.transformDataForHighStocks(this.props.data)
-    }
-    var symbols=[]
-    if(data){
-      symbols = Object.keys(data)
+      if(data){
+        symbols = Object.keys(data)
+      }
     }
 
     return(
