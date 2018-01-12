@@ -135,10 +135,11 @@ export function fetchMarketDataForHoldings(holdings) {
 
           /*
            TODO:
-           1. We need to notify the user about the error
+           1. We need to notify the user about the error (DONE)
            2. We need to retry to fetch new data for this url after a certain time
            3. After reloading we need to refetch data for urls with errors (error message will be cached now and data will not be refetched)
            */
+
         ).then(json => {
           if(holding.exchange==="SWX"){
             //Data Structure of data from SWX is diffrent from the one from
