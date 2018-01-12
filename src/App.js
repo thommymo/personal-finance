@@ -14,17 +14,11 @@ class App extends Component {
 
   componentDidMount(){
     const { dispatch, exchangeRates, marketDataForHoldings } = this.props
-
     const yesterday = ((Date.now())-(60 * 60 * 100 * 24))
 
     if(this.props.portfolio.items.length===0){
-      dispatch(fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataForHoldings))
+      dispatch(fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
     }
-    if(exchangeRates.receivedAt < yesterday){
-      dispatch(fetchExchangeRates("CHF"))
-    }
-
-
 
   }
 

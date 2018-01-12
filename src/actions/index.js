@@ -60,11 +60,16 @@ export function receivePortfolio(items) {
   }
 }
 
-export function fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataForHoldings) {
+export function fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates) {
   return function (dispatch) {
     dispatch(requestPortfolio())
-    dispatch(receivePortfolio(portfolio))
     const yesterday = ((Date.now())-(60 * 60 * 100 * 24))
+
+    if(exchangeRates.receivedAt < yesterday){
+      dispatch(fetchExchangeRates("CHF"))
+    }
+
+    dispatch(receivePortfolio(portfolio))
     if(portfolio.length>0){
       const holdingsWithMarketData = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
       if(marketDataForHoldings.receivedAt < yesterday || checkIfNewHoldingsWithMarketData(holdingsWithMarketData)){
