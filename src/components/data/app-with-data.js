@@ -19,12 +19,15 @@ TODO
 */
 
 class AppWithData extends Component {
+
   setPortfolioSelection(holdingsType,color){
     this.props.dispatch(setPortfolioSelection(holdingsType,color))
   }
+
   render() {
     const { holdingsType, color } = this.props.selection
-    const shareValue = Object.keys(this.props.marketDataForHoldings.items).reduce((acc, symbol)=>{
+    const { marketDataForHoldings, portfolio } = this.props
+    const shareValue = Object.keys(marketDataForHoldings.items).reduce((acc, symbol)=>{
       const data = this.props.marketDataForHoldings.items[symbol]["Monthly Adjusted Time Series"]
       const allDates = Object.keys(data).sort((a,b)=>(a > b))
       acc[symbol] = parseFloat(data[allDates[(allDates.length-1)]]["5. adjusted close"])
@@ -32,7 +35,7 @@ class AppWithData extends Component {
     },{})
 
     const exchangeRates = this.props.exchangeRates.rates
-    const filteredSymbols = portfolio.filter(holding => (holding.type === holdingsType)).map(holding => holding.symbol)
+    const filteredSymbols = portfolio.items.filter(holding => (holding.type === holdingsType)).map(holding => holding.symbol)
     const filteredMarketData = filteredSymbols.reduce((acc,symbol)=>{
         acc[symbol] = this.props.marketDataForHoldings.items[symbol]
         return acc
@@ -51,7 +54,7 @@ class AppWithData extends Component {
           <PieChart
             filter={holdingsType}
             setPortfolioSelection={(holdingsType,color)=>this.setPortfolioSelection(holdingsType,color)}
-            portfolio={portfolio}
+            portfolio={portfolio.items}
             currency={exchangeRates}
             holdingsWithMarketPrice={holdingsWithMarketPrice}
             shareValue={shareValue}
@@ -61,7 +64,7 @@ class AppWithData extends Component {
           <TableWithHoldings
             portfolioSelection={holdingsType}
             color={color}
-            portfolio={portfolio}
+            portfolio={portfolio.items}
             currency={exchangeRates}
           />
         }
@@ -71,7 +74,7 @@ class AppWithData extends Component {
               portfolioSelection={holdingsType}
               color={color}
               shareValue={shareValue}
-              portfolio={portfolio}
+              portfolio={portfolio.items}
               exchangeRates={exchangeRates}
             />
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>

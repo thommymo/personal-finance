@@ -97,6 +97,8 @@ class PieChart extends Component {
   render() {
     const { portfolio, holdingsWithMarketPrice, shareValue, currency, filter } = this.props
 
+    console.log(this.props)
+
     let filteredPortfolio
     if(filter){
       filteredPortfolio = portfolio.filter(holding => (holding.type === filter))
