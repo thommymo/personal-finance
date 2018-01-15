@@ -4,6 +4,10 @@ import styled from 'styled-components'
 import { addInvestment } from '../../actions'
 import { holdingsWithMarketPrice } from '../../data/data'
 
+/*
+  TODO: Data Validation in Form
+*/
+
 class AddInvestment extends Component {
   constructor(props){
     super(props)

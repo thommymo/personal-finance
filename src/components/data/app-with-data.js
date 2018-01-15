@@ -67,6 +67,7 @@ class AppWithData extends Component {
             shareValue={shareValue}
           />
         }
+        <ButtonWrapper><AddInvestment /></ButtonWrapper>
         { !exchangeRates.isFetching && exchangeRates && holdingsType && !holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
           <TableWithHoldings
             portfolioSelection={holdingsType}
@@ -87,7 +88,7 @@ class AppWithData extends Component {
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
         }
-        <ButtonWrapper><AddInvestment /></ButtonWrapper>
+
       </ChartWrapper>
     )
   }
