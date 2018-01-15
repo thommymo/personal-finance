@@ -7,6 +7,7 @@ import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarket
 import { setPortfolioSelection } from '../../actions'
 import LineChart from '../molecules/linechart'
 import AddInvestment from '../data/add-investment'
+import styled from 'styled-components'
 
 //Data will come from a database later, instead of the import from "../../data/data"
 
@@ -47,7 +48,7 @@ class AppWithData extends Component {
         return acc
       },{})
     return (
-      <div>
+      <ChartWrapper>
         { exchangeRates.isFetching &&
           //TODO: Add a beautiful Loading state
           <div>Loading</div>
@@ -86,8 +87,8 @@ class AppWithData extends Component {
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
         }
-        <AddInvestment />
-      </div>
+        <ButtonWrapper><AddInvestment /></ButtonWrapper>
+      </ChartWrapper>
     )
   }
 }
@@ -97,3 +98,16 @@ const mapStateToProps = (state, props) => ({
 });
 
 export default connect(mapStateToProps)(AppWithData)
+
+const ChartWrapper = styled.div`
+  display: block;
+  flex-direction: column;
+  align-items:center;
+  width: 100vw;
+`
+const ButtonWrapper = styled.div`
+  display: flex;
+  width:100%;
+  align-items:center;
+  justify-content: center;
+`

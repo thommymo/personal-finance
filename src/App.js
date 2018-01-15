@@ -47,7 +47,7 @@ class App extends Component {
         }
         { marketDataForHoldings.error &&
           //TODO: Make Error Messages more accurate
-          <div>{marketDataForHoldings.error.errorMessage.MSFT}</div>
+          <div>{marketDataForHoldings.error.errorMessage}</div>
         }
         { !this.isFetching(marketDataForHoldings) &&
           <AppWithData />

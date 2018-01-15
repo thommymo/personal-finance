@@ -77,6 +77,7 @@ function marketDataForHoldings(
 
       let updatedItems = state.items
       updatedItems[action.symbol] = action.json
+      updatedItems[action.symbol].receivedAt = action.receivedAt
       return {
         ...state,
         items: updatedItems,

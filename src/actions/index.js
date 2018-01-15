@@ -87,26 +87,29 @@ export function fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataFor
 
     if(portfolio.length>0){
       const holdingsWithMarketData = portfolio.filter(holding => holdingsWithMarketPrice.some(holdingSymbol => holdingSymbol === holding.type))
-
       holdingsWithMarketData.forEach((holding) => {
-        if(
-          marketDataForHoldings.receivedAt < yesterday /*TODO: Rewrite so every holding has a receivedAt value */
-          ||
-          checkIfNewHoldingsWithMarketData(holding, holdingsWithMarketData))
-          {
+        if(isNotYetFetchedHolding(holding, marketDataForHoldings)){
+          dispatch(fetchMarketDataForHolding(holding))
+        } else {
+          if(isOldData(marketDataForHoldings, holding, yesterday))
             dispatch(fetchMarketDataForHolding(holding))
           }
-      })
-
+        }
+      )
     }
 
-    function checkIfNewHoldingsWithMarketData (holding, holdingsWithMarketData) {
-      const SymbolsOfHoldingsWithMarketData = holdingsWithMarketData.reduce((acc, holding) => (acc.concat(holding.symbol)),[])
-      if(SymbolsOfHoldingsWithMarketData.includes(holding.symbol)){
-        return true
+    function isOldData (marketDataForHoldings, holding, date){
+      if(Object.keys(marketDataForHoldings.items[holding.symbol]).length > 0){
+        return marketDataForHoldings.items[holding.symbol].receivedAt < date
       } else {
-        return false
+        return true
       }
+    }
+
+    function isNotYetFetchedHolding (holding, marketDataForHoldings) {
+      const SymbolsOfHoldingsWithMarketData = Object.keys(marketDataForHoldings.items)
+      console.log("isfetched?", SymbolsOfHoldingsWithMarketData.includes(holding.symbol), holding, marketDataForHoldings);
+      return !SymbolsOfHoldingsWithMarketData.includes(holding.symbol)
     }
   }
 }
@@ -208,7 +211,7 @@ export function fetchMarketDataForHolding(holding) {
         date = date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8)
         value[date] = {
           "1. open": json.valors[0].data.Open[i], //valors.date.Open
-          "2. high": json.valors[0].data.High[i],//valors.date.High
+          "2. high": json.valors[0].data.High[i], //valors.date.High
           "3. low": json.valors[0].data.Low[i], //valors.date.Low
           "4. close": json.valors[0].data.Close[i],  //valors.date.Close
           "5. adjusted close": json.valors[0].data.Close[i], //valors.date.Close
