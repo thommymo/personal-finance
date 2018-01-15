@@ -6,6 +6,7 @@ import TableWithHoldings from '../molecules/tablewithholdings'
 import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarkets'
 import { setPortfolioSelection } from '../../actions'
 import LineChart from '../molecules/linechart'
+import AddInvestment from '../data/add-investment'
 
 //Data will come from a database later, instead of the import from "../../data/data"
 
@@ -28,16 +29,21 @@ class AppWithData extends Component {
     const { holdingsType, color } = this.props.selection
     const { marketDataForHoldings, portfolio } = this.props
     const shareValue = Object.keys(marketDataForHoldings.items).reduce((acc, symbol)=>{
-      const data = this.props.marketDataForHoldings.items[symbol]["Monthly Adjusted Time Series"]
-      const allDates = Object.keys(data).sort((a,b)=>(a > b))
-      acc[symbol] = parseFloat(data[allDates[(allDates.length-1)]]["5. adjusted close"])
+      if(Object.keys(marketDataForHoldings.items[symbol]).length>0){
+        const data = marketDataForHoldings.items[symbol]["Monthly Adjusted Time Series"]
+        const allDates = Object.keys(data).sort((a,b)=>(a > b))
+        acc[symbol] = parseFloat(data[allDates[(allDates.length-1)]]["5. adjusted close"])
+      }
       return acc
     },{})
 
     const exchangeRates = this.props.exchangeRates.rates
     const filteredSymbols = portfolio.items.filter(holding => (holding.type === holdingsType)).map(holding => holding.symbol)
     const filteredMarketData = filteredSymbols.reduce((acc,symbol)=>{
-        acc[symbol] = this.props.marketDataForHoldings.items[symbol]
+        let marketDataForSymbol = this.props.marketDataForHoldings.items[symbol]
+        if(marketDataForSymbol !== undefined){
+          acc[symbol] = marketDataForSymbol
+        }
         return acc
       },{})
     return (
@@ -80,6 +86,7 @@ class AppWithData extends Component {
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
         }
+        <AddInvestment />
       </div>
     )
   }

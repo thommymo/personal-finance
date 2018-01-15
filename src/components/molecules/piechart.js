@@ -24,11 +24,15 @@ class PieChart extends Component {
 
   getSumOf(portfolio, holdingsWithMarketPrice, currency, shareValue){
     return portfolio
-           .reduce((accumulator, value) => {
-              if(holdingsWithMarketPrice.some(find => find === value.type)){
-                return accumulator+=value.y*shareValue[value.symbol]/currency[value.currency]
+           .reduce((accumulator, holding) => {
+              if(holdingsWithMarketPrice.some(find => find === holding.type)){
+                if(shareValue[holding.symbol]){
+                  return accumulator+=holding.y*shareValue[holding.symbol]/currency[holding.currency]
+                } else {
+                  return accumulator
+                }
               } else {
-                return accumulator+=value.y/currency[value.currency]
+                return accumulator+=holding.y/currency[holding.currency]
               }
             },0)
   }
@@ -52,9 +56,12 @@ class PieChart extends Component {
 
   getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue){
     return portfolio.reduce((accumulator, holding, index) => {
+
      if(accumulator.some((element) => (element.type === holding.type))){
+
        let sum = accumulator.filter((element) => (element.type === holding.type))[0]
        const holdingInCHF = this.getValueInCHF(holding, holdingsWithMarketPrice, currency, shareValue)
+
        sum.y = sum.y + holdingInCHF
        sum.countValues = sum.countValues+1
        return  accumulator.filter((element) => (element.type !== holding.type)).concat(sum)
@@ -78,7 +85,13 @@ class PieChart extends Component {
   }
 
   getValueInCHF(portfolioElement, holdingsWithMarketPrice, currency, shareValue){
-    return holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]/currency[portfolioElement.currency] : portfolioElement.y/currency[portfolioElement.currency]
+    let valueInCHF = holdingsWithMarketPrice.some(find => find === portfolioElement.type) ? portfolioElement.y*shareValue[portfolioElement.symbol]/currency[portfolioElement.currency] : portfolioElement.y/currency[portfolioElement.currency]
+    if(isNaN(valueInCHF)){
+      //TODO: Dispatch an error?
+      return 0
+    }else{
+      return valueInCHF
+    }
   }
 
   filterOnClick(clickedFilter){
@@ -96,8 +109,6 @@ class PieChart extends Component {
 
   render() {
     const { portfolio, holdingsWithMarketPrice, shareValue, currency, filter } = this.props
-
-    console.log(this.props)
 
     let filteredPortfolio
     if(filter){

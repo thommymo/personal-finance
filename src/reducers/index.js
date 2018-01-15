@@ -1,12 +1,13 @@
 import {
   REQUEST_EXCHANGE_RATES,
   RECEIVE_EXCHANGE_RATES,
-  REQUEST_MARKET_DATA_FOR_HOLDINGS,
-  RECEIVE_MARKET_DATA_FOR_HOLDINGS,
+  REQUEST_MARKET_DATA_FOR_HOLDING,
+  RECEIVE_MARKET_DATA_FOR_HOLDING,
   SET_PORTFOLIO_SELECTION,
   REQUEST_PORTFOLIO,
   RECEIVE_PORTFOLIO,
-  ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDINGS,
+  ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING,
+  ADD_INVESTMENT,
 } from '../actions'
 
 function exchangeRates(
@@ -43,24 +44,35 @@ function marketDataForHoldings(
   }, action
 ) {
   switch(action.type){
-    case ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDINGS:
+    case ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING:
+      var updatedIsFetching = state.isFetching
+      var index = state.isFetching.findIndex(element => element.symbol === action.symbol)
+      updatedIsFetching[index] = { isFetching: false, symbol: action.symbol }
       return {
         ...state,
         error: {
           error: true,
-          errorMessage: `Could not load MarketData for ${action.symbol}. This error appeared: ${action.error}`
-        }
+          errorMessage: {
+            [action.symbol]: `Could not load MarketData for ${action.symbol}. This error appeared: ${action.error}`
+          }
+        },
+        isFetching: updatedIsFetching,
       }
-    case REQUEST_MARKET_DATA_FOR_HOLDINGS:
+    case REQUEST_MARKET_DATA_FOR_HOLDING:
       var updatedIsFetching = state.isFetching
-      updatedIsFetching.push({ isFetching: true, symbol: action.symbol })
+      var index = state.isFetching.findIndex(element => element.symbol === action.symbol)
+      if(index!==-1){
+        updatedIsFetching[index] = { isFetching: false, symbol: action.symbol }
+      }else{
+        updatedIsFetching.push({ isFetching: true, symbol: action.symbol })
+      }
       return {
         ...state,
         isFetching: updatedIsFetching
       }
-    case RECEIVE_MARKET_DATA_FOR_HOLDINGS:
+    case RECEIVE_MARKET_DATA_FOR_HOLDING:
       var updatedIsFetching = state.isFetching
-      let index = state.isFetching.findIndex(element => element.symbol === action.symbol)
+      var index = state.isFetching.findIndex(element => element.symbol === action.symbol)
       updatedIsFetching[index] = { isFetching: false, symbol: action.symbol }
 
       let updatedItems = state.items
@@ -108,6 +120,14 @@ function portfolio(
   }, action
 ) {
   switch(action.type){
+    case ADD_INVESTMENT:
+      let newItems = state.items
+      console.log("action.investment",action.investment);
+      newItems.push(action.investment)
+      return {
+        ...state,
+        items: newItems,
+      }
     case REQUEST_PORTFOLIO:
       return {
         ...state,
@@ -126,24 +146,6 @@ function portfolio(
         },
         items: action.items,
       }
-    // case IS_REQUESTING_MARKET_DATA_FOR_PORTFOLIO:
-    //   let newcount = state.isFetching.items.count + 1
-    //   return {
-    //     ...state,
-    //     isFetching: {
-    //       ...state.isFetching,
-    //       items: { count: newcount }
-    //     },
-    //   }
-    // case IS_RECEIVING_MARKET_DATA_FOR_PORTFOLIO:
-    //   let newcount = state.isFetching.items.count - 1
-    //   return {
-    //     ...state,
-    //     isFetching: {
-    //       ...state.isFetching,
-    //       items: { count: newcount }
-    //     },
-    //   }
     default:
       return state
   }

@@ -15,11 +15,13 @@ class App extends Component {
   componentDidMount(){
     const { dispatch, exchangeRates, marketDataForHoldings } = this.props
     const yesterday = ((Date.now())-(60 * 60 * 100 * 24))
-
     if(this.props.portfolio.items.length===0){
+      //Loading initial portfolio state
       dispatch(fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
+    } else if(this.props.portfolio.items.length > 0){
+      //fetching portfolio if portfolio was changed by the user
+      dispatch(fetchPortfolio(this.props.portfolio.items, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
     }
-
   }
 
   isFetching(marketDataForHoldings){
@@ -44,7 +46,8 @@ class App extends Component {
           <div>Loading Data...</div>
         }
         { marketDataForHoldings.error &&
-          <div>{marketDataForHoldings.error.errorMessage}</div>
+          //TODO: Make Error Messages more accurate
+          <div>{marketDataForHoldings.error.errorMessage.MSFT}</div>
         }
         { !this.isFetching(marketDataForHoldings) &&
           <AppWithData />
