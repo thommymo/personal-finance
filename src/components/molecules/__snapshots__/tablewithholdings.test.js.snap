@@ -71,15 +71,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -113,15 +110,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -155,15 +149,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -197,15 +188,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -239,15 +227,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -281,15 +266,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -323,15 +305,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -365,15 +344,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
     <tr
@@ -407,15 +383,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        <div
-          className="sc-gzVnrw lhzmEw"
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
         >
-          <button
-            onClick={[Function]}
-          >
-            Remove
-          </button>
-        </div>
+          Remove
+        </button>
       </td>
     </tr>
   </tbody>
