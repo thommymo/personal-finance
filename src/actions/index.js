@@ -1,3 +1,5 @@
+import { currency } from '../data/data'
+
 export const REQUEST_EXCHANGE_RATES = 'REQUEST_EXCHANGE_RATES'
 export const RECEIVE_EXCHANGE_RATES = 'RECEIVE_EXCHANGE_RATES'
 export const REQUEST_MARKET_DATA_FOR_HOLDING = 'REQUEST_MARKET_DATA_FOR_HOLDING'
@@ -35,7 +37,12 @@ export function fetchExchangeRates(toCurrency) {
     return fetch(`https://api.fixer.io/latest?base=${toCurrency}`)
       .then(
         response => response.json(),
-        error => console.log('An error occurred.', error)
+        error => {
+          //TODO: Fetch data from my own API, where I should have cached currency data
+          console.log('An error occurred.', error, currency)
+          //if there is an error, get data from stale data
+          return {rates: currency}
+        }
       )
       .then(json => {
         let currencyRates = json.rates
