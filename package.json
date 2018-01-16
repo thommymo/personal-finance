@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
     "highcharts": "^5.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -13,17 +11,29 @@
     "react-jsx-highstock": "^2.0.3",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
-    "react-test-renderer": "^16.2.0",
     "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
     "redux-persist": "^5.4.0",
     "redux-thunk": "^2.2.0",
     "styled-components": "^2.4.0"
   },
   "scripts": {
+    "selenium-setup": "selenium-standalone install",
+    "selenium-start": "selenium-standalone start",
+    "e2e-tests": "wdio wdio.conf.js",
+    "e2e-tests-watch": "wdio wdio.conf.js --watch",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "wdio-mocha-framework": "^0.5.12",
+    "chai": "^4.1.2",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "react-test-renderer": "^16.2.0",
+    "redux-logger": "^3.0.6",
+    "selenium-standalone": "^6.12.0",
+    "webdriverio": "^4.10.1"
   }
 }

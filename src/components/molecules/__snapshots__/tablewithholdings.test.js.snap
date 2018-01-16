@@ -5,7 +5,7 @@ exports[`Shows portfolio as pie chart 1`] = `
   className="sc-bdVaJa fBygAm"
   color="blue"
 >
-  <tbody>
+  <thead>
     <tr
       className="sc-bwzfXH blIGVZ"
     >
@@ -35,6 +35,8 @@ exports[`Shows portfolio as pie chart 1`] = `
         After Inflation
       </th>
     </tr>
+  </thead>
+  <tbody>
     <tr
       className="sc-bwzfXH blIGVZ"
     >
@@ -296,6 +298,8 @@ exports[`Shows portfolio as pie chart 1`] = `
         -CHF142.10
       </td>
     </tr>
+  </tbody>
+  <tfoot>
     <tr
       className="sc-bwzfXH blIGVZ"
     >
@@ -325,6 +329,6 @@ exports[`Shows portfolio as pie chart 1`] = `
         -CHF764.19
       </td>
     </tr>
-  </tbody>
+  </tfoot>
 </table>
 `;

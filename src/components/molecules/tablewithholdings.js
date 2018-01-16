@@ -11,7 +11,7 @@ class TableWithHoldings extends Component {
     const sumInterestAfterInflation = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008)),0)
     return (
       <Table color={color}>
-        <tbody>
+        <thead>
           <TableRow>
             <TableColumnHead>Name</TableColumnHead>
             <TableColumnHead>Value in CHF</TableColumnHead>
@@ -19,6 +19,8 @@ class TableWithHoldings extends Component {
             <TableColumnHead>2018</TableColumnHead>
             <TableColumnHead>After Inflation</TableColumnHead>
           </TableRow>
+        </thead>
+        <tbody>
           { portfolio.map((holding, index) => (
             <TableRow key={index}>
               <TableColumn>{holding.name}</TableColumn>
@@ -28,6 +30,8 @@ class TableWithHoldings extends Component {
               <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
             </TableRow>
           ))}
+        </tbody>
+        <tfoot>
           <TableRow>
             <TableColumnFoot>Sum</TableColumnFoot>
             <TableColumnFootRightAlign>{sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
@@ -35,7 +39,7 @@ class TableWithHoldings extends Component {
             <TableColumnFootRightAlign>{sumInterest.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
             <TableColumnFootRightAlign>{sumInterestAfterInflation.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
           </TableRow>
-        </tbody>
+        </tfoot>
       </Table>
     )
   }

@@ -7,7 +7,7 @@ import {
   REQUEST_PORTFOLIO,
   RECEIVE_PORTFOLIO,
   ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING,
-  ADD_INVESTMENT,
+  ADD_INVESTMENT
 } from '../actions'
 
 function exchangeRates(
