@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table, TableRow, TableColumnHead, TableColumn, TableColumnRightAlign, TableColumnFoot, TableColumnFootRightAlign } from '../atoms/table'
-import {RemoveInvestment} from '../atoms/remove-investment'
+import {RemoveInvestment} from '../atoms/remove-investment-button'
 class TableWithHoldings extends Component {
   render() {
     var { portfolio, portfolioSelection, color, currency, removeInvestment } = this.props

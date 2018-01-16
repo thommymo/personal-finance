@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { RemoveInvestment } from './remove-investment';
+import { RemoveInvestment } from './remove-investment-button';
 
 describe('RemoveInvestment component', () => {
   let component;
