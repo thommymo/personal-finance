@@ -29,9 +29,17 @@ describe('Portfolio Reducer', () => {
   }
   const holding = portfolio[0]
 
+  /*
+    Test initial state
+  */
+
   it('Should return the initial state when no action passed', () => {
     expect(reducers.portfolio(undefined, {})).toEqual(initialState);
   });
+
+  /*
+    Test initial Remove Investment
+  */
 
   describe('Remove Investment', ()=>{
     it('Should return the portfolio state without the investment, which was removed', () => {
@@ -39,11 +47,13 @@ describe('Portfolio Reducer', () => {
         type: ADD_INVESTMENT,
         investment: holding
       }
+      //Add one investment:
       const state = reducers.portfolio(undefined, initialAction)
       const action = {
         type: REMOVE_INVESTMENT,
         holding
       }
+      //Remove the investment:
       expect(reducers.portfolio(state, action)).toEqual(initialState)
     })
   })
