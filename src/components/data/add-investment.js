@@ -222,7 +222,7 @@ const Button = styled.div`
     align-self: center;
     font-size: 16px;
     :hover {
-        background-color: black; /* Green */
+        background-color: black;
         color: white;
     }
   }
