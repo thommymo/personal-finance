@@ -10,6 +10,7 @@ describe('Personal Portfolio App', () => {
 
   it('Should remove investment from table', () => {
     browser.url('http://localhost:3000/')
+    browser.waitForExist('button',20000);
     browser.click('path:first-of-type')
     browser.waitForExist('table');
     const tableRowToBeRemoved = $('table:first-of-type tbody tr:first-child')
@@ -18,5 +19,5 @@ describe('Personal Portfolio App', () => {
     const htmlOfFirstTableRowAfterClick = browser.element('table:first-of-type tbody tr:first-child').getHTML()
     expect(htmlOfFirstTableRowAfterClick).to.not.eql(htmlOfTableRowToBeRemoved)
   })
-  
+
 })
