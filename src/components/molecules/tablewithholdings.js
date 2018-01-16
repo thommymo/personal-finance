@@ -4,7 +4,6 @@ import {RemoveInvestment} from '../atoms/remove-investment-button'
 class TableWithHoldings extends Component {
   render() {
     var { portfolio, portfolioSelection, color, currency, removeInvestment } = this.props
-    console.log(removeInvestment);
 
     portfolio = portfolio.filter(holding => (holding.type === portfolioSelection))
     const sum = portfolio.reduce((acc, holding) => (acc+=holding.y),0)
