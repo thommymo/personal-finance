@@ -36,20 +36,21 @@ class App extends Component {
     }
   }
 
+
   render() {
 
-    const { marketDataForHoldings } = this.props
+    const { marketDataForHoldings, exchangeRates } = this.props
 
     return (
       <div>
-        { this.isFetching(marketDataForHoldings) &&
+        { (this.isFetching(marketDataForHoldings) || exchangeRates.isFetching) &&
           <div>Loading Data...</div>
         }
         { marketDataForHoldings.error &&
           //TODO: Make Error Messages more accurate
           <div>{marketDataForHoldings.error.errorMessage}</div>
         }
-        { !this.isFetching(marketDataForHoldings) &&
+        { !this.isFetching(marketDataForHoldings) && !exchangeRates.isFetching &&
           <AppWithData />
         }
       </div>
