@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Table, TableRow, TableColumnHead, TableColumn, TableColumnRightAlign, TableColumnFoot, TableColumnFootRightAlign } from '../atoms/table'
-
+import {RemoveInvestment} from '../atoms/remove-investment'
 class TableWithHoldings extends Component {
   render() {
-    var { portfolio, portfolioSelection, color, currency } = this.props
+    var { portfolio, portfolioSelection, color, currency, removeInvestment } = this.props
+    console.log(removeInvestment);
 
     portfolio = portfolio.filter(holding => (holding.type === portfolioSelection))
     const sum = portfolio.reduce((acc, holding) => (acc+=holding.y),0)
@@ -18,6 +19,7 @@ class TableWithHoldings extends Component {
             <TableColumnHead>Interest Rate</TableColumnHead>
             <TableColumnHead>2018</TableColumnHead>
             <TableColumnHead>After Inflation</TableColumnHead>
+            <TableColumnHead></TableColumnHead>
           </TableRow>
         </thead>
         <tbody>
@@ -28,6 +30,7 @@ class TableWithHoldings extends Component {
               <TableColumnRightAlign>{(holding.interest).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnRightAlign>
               <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
               <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+              <TableColumnRightAlign><RemoveInvestment removeInvestment={(holding) => removeInvestment(holding)} holding={holding}/></TableColumnRightAlign>
             </TableRow>
           ))}
         </tbody>
@@ -38,6 +41,7 @@ class TableWithHoldings extends Component {
             <TableColumnFootRightAlign>{(sumInterest/sum).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnFootRightAlign>
             <TableColumnFootRightAlign>{sumInterest.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
             <TableColumnFootRightAlign>{sumInterestAfterInflation.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
+            <TableColumnFootRightAlign></TableColumnFootRightAlign>
           </TableRow>
         </tfoot>
       </Table>

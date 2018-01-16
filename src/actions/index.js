@@ -7,6 +7,7 @@ export const REQUEST_PORTFOLIO = 'REQUEST_PORTFOLIO'
 export const RECEIVE_PORTFOLIO = 'RECEIVE_PORTFOLIO'
 export const SET_PORTFOLIO_SELECTION = 'SET_PORTFOLIO_SELECTION'
 export const ADD_INVESTMENT = 'ADD_INVESTMENT'
+export const REMOVE_INVESTMENT = 'REMOVE_INVESTMENT'
 
 /*
   FETCH EXCHANGE RATES
@@ -66,6 +67,14 @@ export function receivePortfolio(items) {
     type: RECEIVE_PORTFOLIO,
     items
   }
+}
+
+export function removeInvestment(holding){
+  return {
+    type: REMOVE_INVESTMENT,
+    holding
+  }
+
 }
 
 /* fetchPortfolio gets initial state, when no values are available yet */

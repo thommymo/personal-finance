@@ -7,7 +7,8 @@ import {
   REQUEST_PORTFOLIO,
   RECEIVE_PORTFOLIO,
   ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING,
-  ADD_INVESTMENT
+  ADD_INVESTMENT,
+  REMOVE_INVESTMENT
 } from '../actions'
 
 function exchangeRates(
@@ -123,12 +124,22 @@ function portfolio(
   switch(action.type){
     case ADD_INVESTMENT:
       let newItems = state.items
-      console.log("action.investment",action.investment);
       newItems.push(action.investment)
       return {
         ...state,
         items: newItems,
       }
+    case REMOVE_INVESTMENT: {
+      let newItems = state.items
+      const index = newItems.findIndex( (item) => (item===action.holding) )
+      if (index > -1) {
+        newItems.splice(index, 1);
+      }
+      return {
+        ...state,
+        items: newItems,
+      }
+    }
     case REQUEST_PORTFOLIO:
       return {
         ...state,

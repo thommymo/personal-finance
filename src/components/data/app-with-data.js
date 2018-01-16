@@ -4,7 +4,7 @@ import PieChart from '../molecules/piechart'
 import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
 import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarkets'
-import { setPortfolioSelection } from '../../actions'
+import { setPortfolioSelection, removeInvestment } from '../../actions'
 import LineChart from '../molecules/linechart'
 import AddInvestment from '../data/add-investment'
 import styled from 'styled-components'
@@ -21,6 +21,10 @@ TODO
 */
 
 class AppWithData extends Component {
+
+  removeInvestment(holding){
+    this.props.dispatch(removeInvestment(holding))
+  }
 
   setPortfolioSelection(holdingsType,color){
     this.props.dispatch(setPortfolioSelection(holdingsType,color))
@@ -74,6 +78,7 @@ class AppWithData extends Component {
             color={color}
             portfolio={portfolio.items}
             currency={exchangeRates}
+            removeInvestment={(holding)=>this.removeInvestment(holding)}
           />
         }
         { !exchangeRates.isFetching && exchangeRates && holdingsType && holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
@@ -84,6 +89,7 @@ class AppWithData extends Component {
               shareValue={shareValue}
               portfolio={portfolio.items}
               exchangeRates={exchangeRates}
+              removeInvestment={(holding)=>this.removeInvestment(holding)}
             />
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
