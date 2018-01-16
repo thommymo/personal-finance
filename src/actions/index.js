@@ -34,21 +34,31 @@ export function receiveExchangeRates(toCurrency, json) {
 export function fetchExchangeRates(toCurrency) {
   return function (dispatch) {
     dispatch(requestExchangeRates(toCurrency))
-    return fetch(`https://api.fixer.io/latest?base=${toCurrency}`)
-      .then(
-        response => response.json(),
-        error => {
-          //TODO: Fetch data from my own API, where I should have cached currency data
-          console.log('An error occurred.', error, currency)
-          //if there is an error, get data from stale data
-          return {rates: currency}
-        }
-      )
-      .then(json => {
-        let currencyRates = json.rates
-        currencyRates[toCurrency] = 1
-        return dispatch(receiveExchangeRates(toCurrency, currencyRates))
-      })
+
+    /*
+      TODO: Reactivate as soon as there fixer.io works again
+    */
+
+    let currencyRates = currency
+    currencyRates[toCurrency] = 1
+    dispatch(receiveExchangeRates(toCurrency, currencyRates))
+
+
+    // return fetch(`https://api.fixer.io/latest?base=${toCurrency}`)
+    //   .then(
+    //     response => {rates: currency},
+    //     error => {
+    //       //TODO: Fetch data from my own API, where I should have cached currency data
+    //       console.log('An error occurred.', error, currency)
+    //       //if there is an error, get data from stale data
+    //       return {rates: currency}
+    //     }
+    //   )
+    //   .then(json => {
+    //     let currencyRates = json.rates
+    //     currencyRates[toCurrency] = 1
+    //     return dispatch(receiveExchangeRates(toCurrency, currencyRates))
+    //   })
   }
 }
 
