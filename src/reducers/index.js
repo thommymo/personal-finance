@@ -48,9 +48,9 @@ function marketDataForHoldings(
   }, action
 ) {
   switch(action.type){
-    case ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING:
-      var updatedIsFetching = state.isFetching
-      var index = state.isFetching.findIndex(element => element.symbol === action.symbol)
+    case ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING: {
+      let updatedIsFetching = state.isFetching
+      let index = state.isFetching.findIndex(element => element.symbol === action.symbol)
       updatedIsFetching[index] = { isFetching: false, symbol: action.symbol }
       return {
         ...state,
@@ -62,17 +62,19 @@ function marketDataForHoldings(
         },
         isFetching: updatedIsFetching,
       }
-    case REQUEST_MARKET_DATA_FOR_HOLDING:
-      var updatedIsFetching = state.isFetching
-      var index = state.isFetching.findIndex(element => element.symbol === action.symbol)
-      if(index!==-1){
-        updatedIsFetching[index] = { isFetching: false, symbol: action.symbol }
-      }else{
-        updatedIsFetching.push({ isFetching: true, symbol: action.symbol })
-      }
-      return {
-        ...state,
-        isFetching: updatedIsFetching
+    }
+    case REQUEST_MARKET_DATA_FOR_HOLDING: {
+        let updatedIsFetching = state.isFetching
+        let index = state.isFetching.findIndex(element => element.symbol === action.symbol)
+        if(index!==-1){
+          updatedIsFetching[index] = { isFetching: false, symbol: action.symbol }
+        }else{
+          updatedIsFetching.push({ isFetching: true, symbol: action.symbol })
+        }
+        return {
+          ...state,
+          isFetching: updatedIsFetching
+        }
       }
     case RECEIVE_MARKET_DATA_FOR_HOLDING:
       var updatedIsFetching = state.isFetching

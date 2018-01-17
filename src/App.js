@@ -3,7 +3,7 @@ import AppWithData from './components/data/app-with-data'
 import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
 import { connect } from 'react-redux'
-import { fetchExchangeRates, fetchMarketDataForHoldings, fetchPortfolio} from './actions'
+import { fetchPortfolio} from './actions'
 
 /*
 TODO:
@@ -14,7 +14,6 @@ class App extends Component {
 
   componentDidMount(){
     const { dispatch, exchangeRates, marketDataForHoldings } = this.props
-    const yesterday = ((Date.now())-(60 * 60 * 100 * 24))
     if(this.props.portfolio.items.length===0){
       //Loading initial portfolio state
       dispatch(fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
