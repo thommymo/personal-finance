@@ -75,6 +75,12 @@ exports[`Shows portfolio as pie chart 1`] = `
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
         >
+          Edit
+        </button>
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
           Remove
         </button>
       </td>
@@ -110,6 +116,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
+          Edit
+        </button>
         <button
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
@@ -153,6 +165,12 @@ exports[`Shows portfolio as pie chart 1`] = `
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
         >
+          Edit
+        </button>
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
           Remove
         </button>
       </td>
@@ -188,6 +206,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
+          Edit
+        </button>
         <button
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
@@ -231,6 +255,12 @@ exports[`Shows portfolio as pie chart 1`] = `
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
         >
+          Edit
+        </button>
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
           Remove
         </button>
       </td>
@@ -266,6 +296,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
+          Edit
+        </button>
         <button
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
@@ -309,6 +345,12 @@ exports[`Shows portfolio as pie chart 1`] = `
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
         >
+          Edit
+        </button>
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
           Remove
         </button>
       </td>
@@ -348,6 +390,12 @@ exports[`Shows portfolio as pie chart 1`] = `
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}
         >
+          Edit
+        </button>
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
           Remove
         </button>
       </td>
@@ -383,6 +431,12 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        <button
+          className="sc-gzVnrw biOjMH"
+          onClick={[Function]}
+        >
+          Edit
+        </button>
         <button
           className="sc-gzVnrw biOjMH"
           onClick={[Function]}

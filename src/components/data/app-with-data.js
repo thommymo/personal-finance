@@ -4,7 +4,7 @@ import PieChart from '../molecules/piechart'
 import { connect } from 'react-redux'
 import TableWithHoldings from '../molecules/tablewithholdings'
 import TableWithHoldingsFinMarkets from '../molecules/tablewithholdingsfinmarkets'
-import { setPortfolioSelection, removeInvestment } from '../../actions'
+import { setPortfolioSelection, removeInvestment, editInvestment, updateInvestment, cancelEditingInvestment } from '../../actions'
 import LineChart from '../molecules/linechart'
 import AddInvestment from '../data/add-investment'
 import styled from 'styled-components'
@@ -22,17 +22,13 @@ TODO
 
 class AppWithData extends Component {
 
-  removeInvestment(holding){
-    this.props.dispatch(removeInvestment(holding))
-  }
-
   setPortfolioSelection(holdingsType,color){
     this.props.dispatch(setPortfolioSelection(holdingsType,color))
   }
 
   render() {
     const { holdingsType, color } = this.props.selection
-    const { marketDataForHoldings, portfolio } = this.props
+    const { marketDataForHoldings, portfolio, dispatch } = this.props
     const shareValue = Object.keys(marketDataForHoldings.items).reduce((acc, symbol)=>{
       if(Object.keys(marketDataForHoldings.items[symbol]).length>0){
         const data = marketDataForHoldings.items[symbol]["Monthly Adjusted Time Series"]
@@ -78,7 +74,10 @@ class AppWithData extends Component {
             color={color}
             portfolio={portfolio.items}
             currency={exchangeRates}
-            removeInvestment={(holding)=>this.removeInvestment(holding)}
+            removeInvestment={(holding)=>dispatch(removeInvestment(holding))}
+            editInvestment={(holding)=>dispatch(editInvestment(holding))}
+            saveInvestment={(oldHolding,updatedHolding)=>dispatch(updateInvestment(oldHolding,updatedHolding))}
+            cancelEditingInvestment={(holding)=>dispatch(cancelEditingInvestment(holding))}
           />
         }
         { !exchangeRates.isFetching && exchangeRates && holdingsType && holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
@@ -89,7 +88,10 @@ class AppWithData extends Component {
               shareValue={shareValue}
               portfolio={portfolio.items}
               exchangeRates={exchangeRates}
-              removeInvestment={(holding)=>this.removeInvestment(holding)}
+              removeInvestment={(holding)=>dispatch(removeInvestment(holding))}
+              editInvestment={(holding)=>dispatch(editInvestment(holding))}
+              saveInvestment={(oldHolding,updatedHolding)=>dispatch(updateInvestment(oldHolding,updatedHolding))}
+              cancelEditingInvestment={(holding)=>dispatch(cancelEditingInvestment(holding))}
             />
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>

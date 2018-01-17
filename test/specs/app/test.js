@@ -25,11 +25,10 @@ describe('Personal Portfolio App', () => {
     expect(htmlOfFirstTableRowAfterClick).to.not.eql(htmlOfTableRowToBeRemoved)
   })
 
-  it('Should remove investment from table', () => {
+  it('Should add investment to table', () => {
 
     const tableRowToBeEdited = $('table:first-of-type tbody tr:first-child')
-    const htmlOfTableRowToBeEdited = tableRowToBeEdited.getHTML()
-    const Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
+    let Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
 
     // 1. Get edit button and click it
     Buttons.value.forEach( (button) => {
@@ -38,31 +37,51 @@ describe('Personal Portfolio App', () => {
       }
     })
     // 2. There should be a form in the first row now
-      // TODO: Check if there is a new form
+    expect(tableRowToBeEdited.getHTML()).to.include('<input')
 
     // 3. I can edit the row
-      // TODO: Check if i can add new data into the form
-
+    const name = "Test Investement"
+    inputName = tableRowToBeEdited.element('#name')
+    inputName.setValue(name)
+    // inputY = tableRowToBeEdited.element('#y')
+    // inputY.setValue("1000")
+    // inputCurrency = tableRowToBeEdited.element('#currency')
+    // inputCurrency.setValue("CHF")
+    // inputInterest = tableRowToBeEdited.element('#interest')
+    // inputInterest.setValue("1")
+    // inputExchange = tableRowToBeEdited.element('#exchange')
+    // inputExchange.setValue("NSYE")
+    // inputSymbol = tableRowToBeEdited.element('#symbol')
+    // inputSymbol.setValue("VTI")
+    Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
     // 3.1. I can click Save
     Buttons.value.forEach( (button) => {
       if(button.getText()==="Save"){
         button.click()
       }
     })
-    // 3.1.1. The row now contains the new data
-      // TODO: Check if the newly added data is in the row now
-
+    browser.waitForExist('input',1000,true);
+    // 3.1.1. The row now contains the new Data
+    expect(tableRowToBeEdited.element('td:first-child').getText()).to.eql(name)
     // 3.2.1. I can click cancel
+    const htmlOfTableRowToBeEdited = tableRowToBeEdited.getHTML()
+
+    Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
+
     Buttons.value.forEach( (button) => {
       if(button.getText()==="Edit"){
         button.click()
       }
     })
+
+    Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
+
     Buttons.value.forEach( (button) => {
       if(button.getText()==="Cancel"){
         button.click()
       }
     })
+    
     // 3.2.2. The row now contains the old Data
     const htmlOfFirstTableRowAfterClickingCancel = browser.element('table:first-of-type tbody tr:first-child').getHTML()
     expect(htmlOfTableRowToBeEdited).to.eql(htmlOfFirstTableRowAfterClickingCancel)

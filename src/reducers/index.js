@@ -8,7 +8,10 @@ import {
   RECEIVE_PORTFOLIO,
   ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING,
   ADD_INVESTMENT,
-  REMOVE_INVESTMENT
+  REMOVE_INVESTMENT,
+  EDITING_INVESTMENT,
+  UPDATE_INVESTMENT,
+  CANCEL_EDITING_INVESTMENT
 } from '../actions'
 
 function exchangeRates(
@@ -123,21 +126,54 @@ function portfolio(
 ) {
   switch(action.type){
     case ADD_INVESTMENT:
-      let newItems = state.items
-      newItems.push(action.investment)
+      let newItems = state.items.map(item => Object.assign({}, item))
+      if(action.investment !== undefined){
+        newItems.push(action.investment)
+      }
       return {
         ...state,
         items: newItems,
       }
     case REMOVE_INVESTMENT: {
-      let newItems = state.items
-      const index = newItems.findIndex( (item) => (item===action.holding) )
+      let newItems = state.items.map(item => Object.assign({}, item))
+      const index = newItems.findIndex( (item) => JSON.stringify(item) === JSON.stringify(action.holding) )
       if (index > -1) {
         newItems.splice(index, 1);
       }
       return {
         ...state,
         items: newItems,
+      }
+    }
+    case EDITING_INVESTMENT: {
+      let newItems = state.items.map(item => Object.assign({}, item))
+      const index = newItems.findIndex( (item) => ( JSON.stringify(item) === JSON.stringify(action.holding) ))
+      newItems.forEach(item => { delete item.editing})
+      if (index > -1) {
+        let itemToBeEdited = newItems[index]
+        newItems[index] = {...itemToBeEdited, editing: true}
+      }
+      return {
+        ...state,
+        items: newItems
+      }
+    }
+    case CANCEL_EDITING_INVESTMENT: {
+      let newItems = state.items.map(item => Object.assign({}, item))
+      newItems.forEach(item => { delete item.editing})
+      return {
+        ...state,
+        items: newItems
+      }
+    }
+    case UPDATE_INVESTMENT: {
+      let newItems = state.items.map(item => Object.assign({}, item))
+      const index = newItems.findIndex( (item) => ( JSON.stringify(item) === JSON.stringify(action.oldHolding) ))
+      newItems[index] = action.updatedHolding
+      delete newItems[index].editing
+      return {
+        ...state,
+        items: newItems
       }
     }
     case REQUEST_PORTFOLIO:

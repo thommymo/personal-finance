@@ -26,12 +26,12 @@ export const portfolio =  [
   { name: "Postfinance 3a Konto", y: 20782, type: "Retirement Money", currency: "CHF", interest: 0.003 },
   { name: "Postfinance 3a Konto", y: 21490, type: "Retirement Money", currency: "CHF", interest: 0.003 },
   { name: "Postfinance 3a Konto", y: 13616, type: "Retirement Money", currency: "CHF", interest: 0.003 },
-  { name: "LUPK Pensionskasse", y: 94000, type: "Retirement Money", currency: "CHF", interest: 0.015 },
+  { name: "LUPK Pensionskasse", y: 94000, type: "Retirement Money", currency: "CHF", interest: 0.015 }
 ]
 export const holdingsWithMarketPrice = [
   "Equities",
   "Natural Resources",
-  "Real Estate",
+  "Real Estate"
 ]
 
 export const currency = {

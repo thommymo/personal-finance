@@ -10,6 +10,9 @@ export const RECEIVE_PORTFOLIO = 'RECEIVE_PORTFOLIO'
 export const SET_PORTFOLIO_SELECTION = 'SET_PORTFOLIO_SELECTION'
 export const ADD_INVESTMENT = 'ADD_INVESTMENT'
 export const REMOVE_INVESTMENT = 'REMOVE_INVESTMENT'
+export const EDITING_INVESTMENT = 'EDITING_INVESTMENT'
+export const UPDATE_INVESTMENT = 'UPDATE_INVESTMENT'
+export const CANCEL_EDITING_INVESTMENT = 'CANCEL_EDITING_INVESTMENT'
 
 /*
   FETCH EXCHANGE RATES
@@ -73,6 +76,28 @@ export function addInvestment(investment = {}){
   }
 }
 
+export function updateInvestment(oldHolding, updatedHolding){
+  return {
+    type: UPDATE_INVESTMENT,
+    oldHolding,
+    updatedHolding
+  }
+}
+
+export function editInvestment(holding){
+  return {
+    type: EDITING_INVESTMENT,
+    holding
+  }
+}
+
+export function removeInvestment(holding){
+  return {
+    type: REMOVE_INVESTMENT,
+    holding
+  }
+}
+
 export function requestPortfolio() {
   return {
     type: REQUEST_PORTFOLIO,
@@ -86,13 +111,12 @@ export function receivePortfolio(items) {
   }
 }
 
-export function removeInvestment(holding){
-  return {
-    type: REMOVE_INVESTMENT,
-    holding
+export function cancelEditingInvestment(){
+  return{
+    type: CANCEL_EDITING_INVESTMENT
   }
-
 }
+
 
 /* fetchPortfolio gets initial state, when no values are available yet */
 
@@ -134,7 +158,6 @@ export function fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataFor
 
     function isNotYetFetchedHolding (holding, marketDataForHoldings) {
       const SymbolsOfHoldingsWithMarketData = Object.keys(marketDataForHoldings.items)
-      console.log("isfetched?", SymbolsOfHoldingsWithMarketData.includes(holding.symbol), holding, marketDataForHoldings);
       return !SymbolsOfHoldingsWithMarketData.includes(holding.symbol)
     }
   }
@@ -171,8 +194,6 @@ export function fetchMarketDataForHolding(holding) {
   return function (dispatch) {
 
     dispatch(requestMarketDataForHolding(holding.symbol))
-
-    console.log("holding", holding)
 
     let url = ""
     if(holding.exchange === "NYSE"){
