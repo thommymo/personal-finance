@@ -17,6 +17,11 @@ exports[`Shows portfolio as pie chart 1`] = `
       <th
         className="sc-htpNat eTmyiO"
       >
+        Value
+      </th>
+      <th
+        className="sc-htpNat eTmyiO"
+      >
         Value in CHF
       </th>
       <th
@@ -31,11 +36,6 @@ exports[`Shows portfolio as pie chart 1`] = `
       </th>
       <th
         className="sc-htpNat eTmyiO"
-      >
-        After Inflation
-      </th>
-      <th
-        className="sc-htpNat eTmyiO"
       />
     </tr>
   </thead>
@@ -47,6 +47,11 @@ exports[`Shows portfolio as pie chart 1`] = `
         className="sc-bxivhb jSiPdZ"
       >
         DKB EUR Privatkonto
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
+        €841.00
       </td>
       <td
         className="sc-ifAKCX fTHyJg"
@@ -66,19 +71,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF4.76
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -101,6 +101,11 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        CHF3,361.00
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
         0.01%
       </td>
       <td
@@ -111,19 +116,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF26.55
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -146,6 +146,11 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        CHF13,402.00
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
         0.01%
       </td>
       <td
@@ -156,19 +161,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF105.88
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -191,6 +191,11 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        CHF60,806.00
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
         0.01%
       </td>
       <td
@@ -201,19 +206,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF480.37
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -227,6 +227,11 @@ exports[`Shows portfolio as pie chart 1`] = `
         className="sc-bxivhb jSiPdZ"
       >
         True Wealth GBP Account
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
+        £41.00
       </td>
       <td
         className="sc-ifAKCX fTHyJg"
@@ -246,19 +251,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF0.33
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -272,6 +272,11 @@ exports[`Shows portfolio as pie chart 1`] = `
         className="sc-bxivhb jSiPdZ"
       >
         True Wealth USD Account
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
+        $400.00
       </td>
       <td
         className="sc-ifAKCX fTHyJg"
@@ -291,19 +296,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF3.20
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -317,6 +317,11 @@ exports[`Shows portfolio as pie chart 1`] = `
         className="sc-bxivhb jSiPdZ"
       >
         True Wealth EUR Account
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
+        €86.00
       </td>
       <td
         className="sc-ifAKCX fTHyJg"
@@ -336,19 +341,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF0.69
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -371,6 +371,11 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        CHF41.00
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
         0.00%
       </td>
       <td
@@ -381,19 +386,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF0.33
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove
@@ -416,6 +416,11 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
+        CHF20,300.00
+      </td>
+      <td
+        className="sc-ifAKCX fTHyJg"
+      >
         0.10%
       </td>
       <td
@@ -426,19 +431,14 @@ exports[`Shows portfolio as pie chart 1`] = `
       <td
         className="sc-ifAKCX fTHyJg"
       >
-        -CHF142.10
-      </td>
-      <td
-        className="sc-ifAKCX fTHyJg"
-      >
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Edit
         </button>
         <button
-          className="sc-gzVnrw biOjMH"
+          className="sc-gzVnrw lbhaap"
           onClick={[Function]}
         >
           Remove

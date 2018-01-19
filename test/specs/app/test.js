@@ -25,45 +25,91 @@ describe('Personal Portfolio App', () => {
     expect(htmlOfFirstTableRowAfterClick).to.not.eql(htmlOfTableRowToBeRemoved)
   })
 
-  it('Should add investment to table', () => {
+  it('Should edit investment', () => {
 
     const tableRowToBeEdited = $('table:first-of-type tbody tr:first-child')
-    let Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
 
-    // 1. Get edit button and click it
+    /*
+      1. Detect edit button and click it
+    */
+
+    let Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
     Buttons.value.forEach( (button) => {
       if(button.getText()==="Edit"){
         button.click()
       }
     })
-    // 2. There should be a form in the first row now
+
+    /*
+      2. There should be a form in the first row of tbody now
+    */
+
     expect(tableRowToBeEdited.getHTML()).to.include('<input')
 
-    // 3. I can edit the row
+    /*
+      3. The form can be edited now
+    */
+
     const name = "Test Investement"
     inputName = tableRowToBeEdited.element('#name')
     inputName.setValue(name)
-    // inputY = tableRowToBeEdited.element('#y')
-    // inputY.setValue("1000")
-    // inputCurrency = tableRowToBeEdited.element('#currency')
-    // inputCurrency.setValue("CHF")
-    // inputInterest = tableRowToBeEdited.element('#interest')
-    // inputInterest.setValue("1")
-    // inputExchange = tableRowToBeEdited.element('#exchange')
-    // inputExchange.setValue("NSYE")
-    // inputSymbol = tableRowToBeEdited.element('#symbol')
-    // inputSymbol.setValue("VTI")
+    const y = 120221
+    inputY = tableRowToBeEdited.element('#y')
+    inputY.setValue(y)
+    const currency = "AUD"
+    inputCurrency = tableRowToBeEdited.element('#currency')
+    inputCurrency.selectByValue(currency)
+
+    let withInterest = false
+    let withExchange = false
+    let withSymbol = false
+
+    const interest = 1.125
+    if(tableRowToBeEdited.isExisting('#interest')){
+      inputInterest = tableRowToBeEdited.element('#interest')
+      inputInterest.setValue(interest)
+      withInterest = true
+    }
+    if(tableRowToBeEdited.isExisting('#exchange')){
+      inputExchange = tableRowToBeEdited.element('#exchange')
+      inputExchange.setValue("NSYE")
+      withExchange = true
+    }
+    if(tableRowToBeEdited.isExisting('#symbol')){
+      inputSymbol = tableRowToBeEdited.element('#symbol')
+      inputSymbol.setValue("VTI")
+      withSymbol = true
+    }
+
+    /*
+      4. After editing the form can be saved now
+    */
     Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
-    // 3.1. I can click Save
     Buttons.value.forEach( (button) => {
       if(button.getText()==="Save"){
         button.click()
       }
     })
+
     browser.waitForExist('input',1000,true);
-    // 3.1.1. The row now contains the new Data
+
+    /*
+      5. The row now should contain the newly added Data
+    */
+
     expect(tableRowToBeEdited.element('td:first-child').getText()).to.eql(name)
-    // 3.2.1. I can click cancel
+    expect(tableRowToBeEdited.element('td:nth-child(2)').getText().replace(/[^0-9]/g, '')).to.include(y)
+    expect(tableRowToBeEdited.element('td:nth-child(4)').getText().replace(/[^0-9]/g, '')).to.include(interest.toString().replace(/[^0-9]/g, ''))
+
+  })
+
+  it('Should cancel editing investment', () => {
+
+    const tableRowToBeEdited = $('table:first-of-type tbody tr:first-child')
+    /*
+      1. It should be possible to edit and cancel editing
+    */
+
     const htmlOfTableRowToBeEdited = tableRowToBeEdited.getHTML()
 
     Buttons = browser.elements('table:first-of-type tbody tr:first-child button')
@@ -81,8 +127,11 @@ describe('Personal Portfolio App', () => {
         button.click()
       }
     })
-    
-    // 3.2.2. The row now contains the old Data
+
+    /*
+      2. The row should contain old Data now
+    */
+
     const htmlOfFirstTableRowAfterClickingCancel = browser.element('table:first-of-type tbody tr:first-child').getHTML()
     expect(htmlOfTableRowToBeEdited).to.eql(htmlOfFirstTableRowAfterClickingCancel)
 

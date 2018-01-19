@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Table, TableRow, TableColumnHead, TableColumn, TableColumnRightAlign, TableColumnFoot, TableColumnFootRightAlign } from '../atoms/table'
-import {RemoveInvestment} from '../atoms/remove-investment-button'
+import { RemoveInvestment } from '../atoms/remove-investment-button'
 import { EditInvestmentButton } from '../atoms/edit-investment-button'
 import { SaveInvestmentButton } from '../atoms/save-investment-button'
 import { CancelEditingInvestmentButton } from '../atoms/cancel-editing-investment-button'
+import { Input, Select, Option } from '../atoms/forms'
+
 class TableWithHoldings extends Component {
   constructor(props){
     super(props)
@@ -29,7 +31,8 @@ class TableWithHoldings extends Component {
 
   handleChange(event){
     const name = event.target.name
-    const value = (name === "y" || name === "interest") ? parseFloat(event.target.value) : event.target.value
+    const value = event.target.value
+
     this.setState({
       updatedHolding: {
         ...this.state.updatedHolding,
@@ -63,10 +66,10 @@ class TableWithHoldings extends Component {
           <thead>
             <TableRow>
               <TableColumnHead>Name</TableColumnHead>
+              <TableColumnHead>Value</TableColumnHead>
               <TableColumnHead>Value in CHF</TableColumnHead>
               <TableColumnHead>Interest Rate</TableColumnHead>
               <TableColumnHead>2018</TableColumnHead>
-              <TableColumnHead>After Inflation</TableColumnHead>
               <TableColumnHead></TableColumnHead>
             </TableRow>
           </thead>
@@ -75,11 +78,26 @@ class TableWithHoldings extends Component {
               if(holding.editing){
                 return(
                   <TableRow key={index}>
-                    <TableColumn><input value={this.state.updatedHolding.name} onChange={this.handleChange} name="name" id="name"/></TableColumn>
-                    <TableColumnRightAlign>{(holding.y/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
-                    <TableColumnRightAlign>{(holding.interest).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnRightAlign>
-                    <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
-                    <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+                    <TableColumn>
+                      <Input value={this.state.updatedHolding.name} onChange={this.handleChange} name="name" id="name"/>
+                    </TableColumn>
+                    <TableColumnRightAlign>
+                      <Select value={this.state.type} name="currency" id="currency" onChange={this.handleChange}>
+                        { Object.keys(currency).map(item => {
+                          if(this.state.updatedHolding.currency === item){
+                            return <Option key={item} value={item} selected>{item}</Option>
+                          } else {
+                            return <Option key={item} value={item}>{item}</Option>
+                          }
+                        })}
+                      </Select>
+                      <Input value={this.state.updatedHolding.y} onChange={this.handleChange} name="y" type="number" id="y"/>
+                    </TableColumnRightAlign>
+                    <TableColumnRightAlign>{(parseFloat(this.state.updatedHolding.y)/currency[this.state.updatedHolding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+                    <TableColumnRightAlign>
+                      <Input value={parseFloat(this.state.updatedHolding.interest)} onChange={this.handleChange}  type="number" name="interest" id="interest"/>
+                    </TableColumnRightAlign>
+                    <TableColumnRightAlign>{(parseFloat(this.state.updatedHolding.y)*parseFloat(this.state.updatedHolding.interest)/currency[this.state.updatedHolding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
                     <TableColumnRightAlign>
                       <SaveInvestmentButton saveInvestment={(oldHolding, updatedHolding) => saveInvestment(oldHolding, updatedHolding)} oldHolding={this.state.oldHolding} updatedHolding={this.state.updatedHolding}/>
                       <CancelEditingInvestmentButton cancelEditingInvestment={(holding) => cancelEditingInvestment(holding)} holding={holding}/>
@@ -90,10 +108,10 @@ class TableWithHoldings extends Component {
                 return(
                   <TableRow key={index}>
                     <TableColumn>{holding.name}</TableColumn>
-                    <TableColumnRightAlign>{(holding.y/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
-                    <TableColumnRightAlign>{(holding.interest).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnRightAlign>
+                    <TableColumnRightAlign>{(parseFloat(holding.y)).toLocaleString("de-CH", { style: 'currency', currency: holding.currency })}</TableColumnRightAlign>
+                    <TableColumnRightAlign>{(parseFloat(holding.y)/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
+                    <TableColumnRightAlign>{(parseFloat(holding.interest)).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnRightAlign>
                     <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
-                    <TableColumnRightAlign>{(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008).toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnRightAlign>
                     <TableColumnRightAlign>
                       <EditInvestmentButton editInvestment={(holding) => editInvestment(holding)} holding={holding}/>
                       <RemoveInvestment removeInvestment={(holding) => removeInvestment(holding)} holding={holding}/>
