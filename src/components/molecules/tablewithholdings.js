@@ -10,13 +10,26 @@ class TableWithHoldings extends Component {
   constructor(props){
     super(props)
     this.state = {
-      oldHolding: {},
-      updatedHolding: {}
+      oldHolding: {
+        name: '',
+        y: '',
+        symbol: '',
+        exchange: '',
+        interest: 0,
+        currency: ''
+      },
+      updatedHolding: {
+        name: '',
+        y: '',
+        symbol: '',
+        exchange: '',
+        interest: 0,
+        currency: ''
+      }
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleCancel = this.handleCancel.bind(this)
   }
 
   componentDidUpdate(){
@@ -39,17 +52,11 @@ class TableWithHoldings extends Component {
         [name]: value
       }
     })
-    console.log(this.state.updatedHolding)
-  }
-
-  handleCancel(){
-    //this.props.cancelUpdateInvestment()
   }
 
   handleSubmit(){
     const oldHolding = this.state.oldHolding
     const updatedHolding = this.state.updatedHolding
-    console.log(oldHolding, updatedHolding);
     this.props.updateInvestment(oldHolding,updatedHolding)
   }
 

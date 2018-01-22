@@ -87,7 +87,7 @@ class AppWithData extends Component {
               color={color}
               shareValue={shareValue}
               portfolio={portfolio.items}
-              exchangeRates={exchangeRates}
+              currency={exchangeRates}
               removeInvestment={(holding)=>dispatch(removeInvestment(holding))}
               editInvestment={(holding)=>dispatch(editInvestment(holding))}
               saveInvestment={(oldHolding,updatedHolding)=>dispatch(updateInvestment(oldHolding,updatedHolding))}

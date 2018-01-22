@@ -11,7 +11,7 @@ export const portfolio =  [
   { name: "True Wealth CHF Account", y: 41, type: "Cash", currency: "CHF", interest: 0 },
   { name: "ABL kurzfristig", y: 20300, type: "Cash", currency: "CHF", interest: 0.001 },
   // { name:"SPDR® FTSE UK All Share UCITS ETF", y: 17, type: "Equities", exchange: "SWX", symbol: 'IE00B7452L46', currency: "CHF"},
-  // { name:"iShares STOXX Europe 600 UCITS ETF", y: 32, type: "Equities", exchange: "SWX", symbol: 'DE0002635307', currency: "EUR"},
+  { name:"iShares STOXX Europe 600 UCITS ETF", y: 32, type: "Equities", exchange: "SWX", symbol: 'DE0002635307', currency: "EUR"},
   // { name:"Vanguard US Total Stock Market Shares Index ETF", y: 8, type: "Equities", exchange: "NYSE", symbol: 'VTI', currency: "USD"},
   // { name:"Vanguard FTSE Emerging Markets ETF", y: 34, type: "Equities", exchange: "NYSE", symbol: 'VWO', currency: "USD"},
   // { name:"Vanguard FTSE Pacific ETF", y: 13, type: "Equities", exchange: "NYSE", symbol: 'VPL', currency: "USD"},
