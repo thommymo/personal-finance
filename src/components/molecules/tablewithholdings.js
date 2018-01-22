@@ -55,12 +55,23 @@ class TableWithHoldings extends Component {
 
   render() {
 
-    var { portfolio, portfolioSelection, color, currency, removeInvestment, editInvestment, saveInvestment, cancelEditingInvestment } = this.props
+    let {
+      portfolio
+    } = this.props
+
+    const {
+      portfolioSelection,
+      color,
+      currency,
+      removeInvestment,
+      editInvestment,
+      saveInvestment,
+      cancelEditingInvestment
+    } = this.props
 
     portfolio = portfolio.filter(holding => (holding.type === portfolioSelection))
-    const sum = portfolio.reduce((acc, holding) => (acc+=holding.y),0)
+    const sum = portfolio.reduce((acc, holding) => (acc += parseFloat(holding.y) ),0)
     const sumInterest = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest/currency[holding.currency])),0)
-    const sumInterestAfterInflation = portfolio.reduce((acc, holding) => (acc+=(holding.y*holding.interest/currency[holding.currency]-holding.y*0.008)),0)
     return (
         <Table color={color}>
           <thead>
@@ -124,10 +135,10 @@ class TableWithHoldings extends Component {
           <tfoot>
             <TableRow>
               <TableColumnFoot>Sum</TableColumnFoot>
+              <TableColumnFoot></TableColumnFoot>
               <TableColumnFootRightAlign>{sum.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
               <TableColumnFootRightAlign>{(sumInterest/sum).toLocaleString("de-CH", { style: 'percent', minimumFractionDigits: 2})}</TableColumnFootRightAlign>
               <TableColumnFootRightAlign>{sumInterest.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
-              <TableColumnFootRightAlign>{sumInterestAfterInflation.toLocaleString("de-CH", { style: 'currency', currency: 'CHF' })}</TableColumnFootRightAlign>
               <TableColumnFootRightAlign></TableColumnFootRightAlign>
             </TableRow>
           </tfoot>
