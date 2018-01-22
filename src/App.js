@@ -4,6 +4,7 @@ import './utils/global-css'
 import { portfolio, holdingsWithMarketPrice } from './data/data'
 import { connect } from 'react-redux'
 import { fetchPortfolio} from './actions'
+import { LoadingIndicator } from './components/atoms/loading-indicator'
 
 /*
 TODO:
@@ -43,7 +44,7 @@ class App extends Component {
     return (
       <div>
         { (this.isFetching(marketDataForHoldings) || exchangeRates.isFetching) &&
-          <div>Loading Data...</div>
+          <LoadingIndicator>Loading Data...</LoadingIndicator>
         }
         { marketDataForHoldings.error &&
           //TODO: Make Error Messages more accurate
