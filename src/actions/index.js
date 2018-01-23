@@ -40,7 +40,7 @@ export function fetchExchangeRates(toCurrency) {
 
     return fetch(`https://api.fixer.io/latest?base=${toCurrency}`)
       .then(
-        response => {rates: currency},
+        response => response.json(),
         error => {
           //TODO: Fetch data from my own API, where I should have cached currency data
           console.log('An error occurred.', error, currency)
@@ -117,9 +117,6 @@ export function receivePortfolio(items) {
     items
   }
 }
-
-
-
 
 /* fetchPortfolio gets initial state, when no values are available yet */
 
