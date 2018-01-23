@@ -7,10 +7,10 @@ import {
   REQUEST_PORTFOLIO,
   RECEIVE_PORTFOLIO,
   ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING,
-  ADD_INVESTMENT,
-  REMOVE_INVESTMENT,
+  ADD_INVESTMENT_TO_PORTFOLIO,
+  REMOVE_INVESTMENT_FROM_PORTFOLIO,
   EDITING_INVESTMENT,
-  UPDATE_INVESTMENT,
+  UPDATE_INVESTMENT_IN_PORTFOLIO,
   CANCEL_EDITING_INVESTMENT
 } from '../actions'
 
@@ -127,7 +127,7 @@ function portfolio(
   }, action
 ) {
   switch(action.type){
-    case ADD_INVESTMENT:
+    case ADD_INVESTMENT_TO_PORTFOLIO:
       let newItems = state.items.map(item => Object.assign({}, item))
       if(action.investment !== undefined){
         newItems.push(action.investment)
@@ -136,7 +136,7 @@ function portfolio(
         ...state,
         items: newItems,
       }
-    case REMOVE_INVESTMENT: {
+    case REMOVE_INVESTMENT_FROM_PORTFOLIO: {
       let newItems = state.items.map(item => Object.assign({}, item))
       const index = newItems.findIndex( (item) => JSON.stringify(item) === JSON.stringify(action.holding) )
       if (index > -1) {
@@ -168,7 +168,7 @@ function portfolio(
         items: newItems
       }
     }
-    case UPDATE_INVESTMENT: {
+    case UPDATE_INVESTMENT_IN_PORTFOLIO: {
       let newItems = state.items.map(item => Object.assign({}, item))
       const index = newItems.findIndex( (item) => ( JSON.stringify(item) === JSON.stringify(action.oldHolding) ))
       newItems[index] = action.updatedHolding

@@ -8,10 +8,10 @@ export const ERROR_WHILE_FETCHING_MARKET_DATA_FOR_HOLDING = 'ERROR_WHILE_FETCHIN
 export const REQUEST_PORTFOLIO = 'REQUEST_PORTFOLIO'
 export const RECEIVE_PORTFOLIO = 'RECEIVE_PORTFOLIO'
 export const SET_PORTFOLIO_SELECTION = 'SET_PORTFOLIO_SELECTION'
-export const ADD_INVESTMENT = 'ADD_INVESTMENT'
-export const REMOVE_INVESTMENT = 'REMOVE_INVESTMENT'
+export const ADD_INVESTMENT_TO_PORTFOLIO = 'ADD_INVESTMENT_TO_PORTFOLIO'
+export const REMOVE_INVESTMENT_FROM_PORTFOLIO = 'REMOVE_INVESTMENT_FROM_PORTFOLIO'
 export const EDITING_INVESTMENT = 'EDITING_INVESTMENT'
-export const UPDATE_INVESTMENT = 'UPDATE_INVESTMENT'
+export const UPDATE_INVESTMENT_IN_PORTFOLIO = 'UPDATE_INVESTMENT_IN_PORTFOLIO'
 export const CANCEL_EDITING_INVESTMENT = 'CANCEL_EDITING_INVESTMENT'
 
 /*
@@ -62,7 +62,6 @@ export function fetchExchangeRates(toCurrency) {
 
 export function addHolding(holding){
   return function(dispatch){
-
     dispatch(addHoldingToPortfolio(holding))
     if(holding.symbol){
       dispatch(fetchMarketDataForHolding(holding))
@@ -73,14 +72,14 @@ export function addHolding(holding){
 
 export function addHoldingToPortfolio(investment = {}){
   return {
-    type: ADD_INVESTMENT,
+    type: ADD_INVESTMENT_TO_PORTFOLIO,
     investment
   }
 }
 
 export function updateInvestment(oldHolding, updatedHolding){
   return {
-    type: UPDATE_INVESTMENT,
+    type: UPDATE_INVESTMENT_IN_PORTFOLIO,
     oldHolding,
     updatedHolding
   }
@@ -101,7 +100,7 @@ export function cancelEditingInvestment(){
 
 export function removeInvestment(holding){
   return {
-    type: REMOVE_INVESTMENT,
+    type: REMOVE_INVESTMENT_FROM_PORTFOLIO,
     holding
   }
 }
