@@ -14,26 +14,17 @@ TODO:
 class App extends Component {
 
   componentDidMount(){
-    const { dispatch, exchangeRates, marketDataForHoldings } = this.props
-    if(this.props.portfolio.items.length===0){
-      //Loading initial portfolio state
-      dispatch(fetchPortfolio(this.props.portfolio.items, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
-    } else if(this.props.portfolio.items.length > 0){
-      //fetching portfolio if portfolio was changed by the user
-      dispatch(fetchPortfolio(this.props.portfolio.items, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
-    }
+    const { dispatch, exchangeRates, marketDataForHoldings, portfolio } = this.props
+    dispatch(fetchPortfolio(portfolio.items, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
   }
 
   isFetching(marketDataForHoldings){
-    console.log(marketDataForHoldings)
-    console.log(marketDataForHoldings.isFetching.findIndex(element=>element.isFetching===true))
     if(-1 === marketDataForHoldings.isFetching.findIndex(element=>element.isFetching===true)){
       return false
     } else {
       return true
     }
   }
-
 
   render() {
 
@@ -56,8 +47,14 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, props) => {
+  console.log(state)
+  return {
   ...state
-});
+  // dispatch: state.dispatch,
+  // exchangeRates: state.exchangeRates,
+  // portfolio: state.portfolio.items,
+  // marketDataForHoldings: state.marketDataForHoldings,
+}};
 
 export default connect(mapStateToProps)(App)

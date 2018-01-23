@@ -38,30 +38,21 @@ export function fetchExchangeRates(toCurrency) {
   return function (dispatch) {
     dispatch(requestExchangeRates(toCurrency))
 
-    /*
-      TODO: Reactivate as soon as there fixer.io works again
-    */
-
-    let currencyRates = currency
-    currencyRates[toCurrency] = 1
-    dispatch(receiveExchangeRates(toCurrency, currencyRates))
-
-
-    // return fetch(`https://api.fixer.io/latest?base=${toCurrency}`)
-    //   .then(
-    //     response => {rates: currency},
-    //     error => {
-    //       //TODO: Fetch data from my own API, where I should have cached currency data
-    //       console.log('An error occurred.', error, currency)
-    //       //if there is an error, get data from stale data
-    //       return {rates: currency}
-    //     }
-    //   )
-    //   .then(json => {
-    //     let currencyRates = json.rates
-    //     currencyRates[toCurrency] = 1
-    //     return dispatch(receiveExchangeRates(toCurrency, currencyRates))
-    //   })
+    return fetch(`https://api.fixer.io/latest?base=${toCurrency}`)
+      .then(
+        response => {rates: currency},
+        error => {
+          //TODO: Fetch data from my own API, where I should have cached currency data
+          console.log('An error occurred.', error, currency)
+          //if there is an error, get data from stale data
+          return {rates: currency}
+        }
+      )
+      .then(json => {
+        let currencyRates = json.rates
+        currencyRates[toCurrency] = 1
+        return dispatch(receiveExchangeRates(toCurrency, currencyRates))
+      })
   }
 }
 
@@ -196,6 +187,7 @@ export function fetchMarketDataForHolding(holding) {
     dispatch(requestMarketDataForHolding(holding.symbol))
 
     let url = ""
+
     if(holding.exchange === "NYSE"){
       url=`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${holding.symbol}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_API_KEY}`
     }else if (holding.exchange === "SWX"){
@@ -204,6 +196,7 @@ export function fetchMarketDataForHolding(holding) {
       dispatch(errorWhileFetchingMarketDataForHolding(holding.symbol, `Could not find Market ${holding.exchange}`))
       return
     }
+
     fetch(url, {mode: 'cors'})
       .then(
         response => response.json(),
