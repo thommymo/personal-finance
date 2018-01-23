@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
-import { addInvestment } from '../../actions'
+import { addHolding } from '../../actions'
 import { holdingsWithMarketPrice } from '../../data/data'
 
 /*
@@ -55,7 +55,7 @@ class AddInvestment extends Component {
     this.setState({
       show:false
     })
-    this.props.dispatch(addInvestment(this.state))
+    this.props.dispatch(addHolding(this.state))
     this.setState({
       type: "Cash",
       name: "",

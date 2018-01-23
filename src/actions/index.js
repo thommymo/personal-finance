@@ -57,10 +57,21 @@ export function fetchExchangeRates(toCurrency) {
 }
 
 /*
-  FETCH PORTFOLIO
+  PORTFOLIO
 */
 
-export function addInvestment(investment = {}){
+export function addHolding(holding){
+  return function(dispatch){
+
+    dispatch(addHoldingToPortfolio(holding))
+    if(holding.symbol){
+      dispatch(fetchMarketDataForHolding(holding))
+    }
+  }
+}
+
+
+export function addHoldingToPortfolio(investment = {}){
   return {
     type: ADD_INVESTMENT,
     investment
@@ -79,6 +90,12 @@ export function editInvestment(holding){
   return {
     type: EDITING_INVESTMENT,
     holding
+  }
+}
+
+export function cancelEditingInvestment(){
+  return{
+    type: CANCEL_EDITING_INVESTMENT
   }
 }
 
@@ -102,11 +119,7 @@ export function receivePortfolio(items) {
   }
 }
 
-export function cancelEditingInvestment(){
-  return{
-    type: CANCEL_EDITING_INVESTMENT
-  }
-}
+
 
 
 /* fetchPortfolio gets initial state, when no values are available yet */
@@ -276,5 +289,3 @@ export function setPortfolioSelection(holdingsType,color) {
     color
   }
 }
-
-//TODO: ERROR HANDLING
