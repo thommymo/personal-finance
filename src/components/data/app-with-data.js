@@ -49,15 +49,7 @@ class AppWithData extends Component {
       },{})
     return (
       <ChartWrapper>
-        { exchangeRates.isFetching &&
-          //TODO: Add a beautiful Loading state
-          <div>Loading</div>
-        }
-        { !exchangeRates.isFetching && !exchangeRates &&
-          //TODO: Add a beautiful Error state
-          <div>Error</div>
-        }
-        { !exchangeRates.isFetching && exchangeRates &&
+        { portfolio.items.length>0 &&
           <PieChart
             filter={holdingsType}
             setPortfolioSelection={(holdingsType,color)=>this.setPortfolioSelection(holdingsType,color)}
@@ -67,8 +59,10 @@ class AppWithData extends Component {
             shareValue={shareValue}
           />
         }
-        <ButtonWrapper><AddInvestment /></ButtonWrapper>
-        { !exchangeRates.isFetching && exchangeRates && holdingsType && !holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
+        <ButtonWrapper>
+          <AddInvestment />
+        </ButtonWrapper>
+        { holdingsType && !holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
           <TableWithHoldings
             portfolioSelection={holdingsType}
             color={color}
@@ -80,7 +74,7 @@ class AppWithData extends Component {
             cancelEditingInvestment={(holding)=>dispatch(cancelEditingInvestment(holding))}
           />
         }
-        { !exchangeRates.isFetching && exchangeRates && holdingsType && holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
+        { holdingsType && holdingsWithMarketPrice.some(holding => holding===holdingsType) &&
           <div>
             <TableWithHoldingsFinMarkets
               portfolioSelection={holdingsType}
@@ -96,7 +90,6 @@ class AppWithData extends Component {
             <LineChart loadingStatus="loaded" data={filteredMarketData} color={color} holdingsType={holdingsType}/>
           </div>
         }
-
       </ChartWrapper>
     )
   }

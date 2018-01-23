@@ -117,8 +117,14 @@ class PieChart extends Component {
       filteredPortfolio = portfolio
     }
     let typesOfHoldings = this.getTypesOfHoldings(portfolio, holdingsWithMarketPrice, currency, shareValue)
+
     if(filter)  {
-      typesOfHoldings = typesOfHoldings.filter((holding) => (holding.type === filter || !filter))
+      const filteredHoldings = typesOfHoldings.filter((holding) => (holding.type === filter || !filter))
+      if(filteredHoldings.length>0){
+        typesOfHoldings = filteredHoldings
+      }else{
+        this.filterOnClick({filter: false})
+      }
     }
     const holdings = this.getHoldings(filteredPortfolio, holdingsWithMarketPrice, currency, shareValue, typesOfHoldings)
     const sum = this.getSumOf(filteredPortfolio, holdingsWithMarketPrice, currency, shareValue)

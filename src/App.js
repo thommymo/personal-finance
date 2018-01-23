@@ -17,7 +17,7 @@ class App extends Component {
     const { dispatch, exchangeRates, marketDataForHoldings } = this.props
     if(this.props.portfolio.items.length===0){
       //Loading initial portfolio state
-      dispatch(fetchPortfolio(portfolio, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
+      dispatch(fetchPortfolio(this.props.portfolio.items, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
     } else if(this.props.portfolio.items.length > 0){
       //fetching portfolio if portfolio was changed by the user
       dispatch(fetchPortfolio(this.props.portfolio.items, holdingsWithMarketPrice, marketDataForHoldings, exchangeRates))
@@ -25,12 +25,10 @@ class App extends Component {
   }
 
   isFetching(marketDataForHoldings){
+    console.log(marketDataForHoldings)
+    console.log(marketDataForHoldings.isFetching.findIndex(element=>element.isFetching===true))
     if(-1 === marketDataForHoldings.isFetching.findIndex(element=>element.isFetching===true)){
-      if(marketDataForHoldings.isFetching.length > 0){
-        return false
-      } else {
-        return true
-      }
+      return false
     } else {
       return true
     }
@@ -44,7 +42,7 @@ class App extends Component {
     return (
       <div>
         { (this.isFetching(marketDataForHoldings) || exchangeRates.isFetching) &&
-          <LoadingIndicator>Loading Data...</LoadingIndicator>
+          <LoadingIndicator />
         }
         { marketDataForHoldings.error &&
           //TODO: Make Error Messages more accurate
