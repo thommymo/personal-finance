@@ -15,6 +15,7 @@
     "react-jsx-highcharts": "^2.0.3",
     "react-jsx-highstock": "^2.0.3",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "redux": "^3.7.2",
     "redux-persist": "^5.4.0",
@@ -32,13 +33,13 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "wdio-mocha-framework": "^0.5.12",
     "chai": "^4.1.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "react-test-renderer": "^16.2.0",
     "redux-logger": "^3.0.6",
     "selenium-standalone": "^6.12.0",
+    "wdio-mocha-framework": "^0.5.12",
     "webdriverio": "^4.10.1"
   }
 }
