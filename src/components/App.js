@@ -1,10 +1,10 @@
 import React, { Component } from "react"
-import AppWithData from "./components/data/app-with-data"
-import "./utils/global-css"
-import { holdingsWithMarketPrice } from "./data/data"
+import AppWithData from './data/app-with-data'
+import '../utils/global-css'
+import { holdingsWithMarketPrice } from '../data/data'
 import { connect } from "react-redux"
-import { fetchPortfolio } from "./actions"
-import { LoadingIndicator } from "./components/atoms/loading-indicator"
+import { fetchPortfolio } from '../actions'
+import { LoadingIndicator } from './atoms/loading-indicator'
 
 /*
 TODO:
