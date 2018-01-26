@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import { fetchPortfolio, fetchUser } from "../actions"
 import { LoadingIndicator } from "./atoms/loading-indicator"
 import { BrowserRouter, Route } from "react-router-dom"
+import Header from "./molecules/header"
 
 /*
 TODO:
@@ -50,7 +51,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <a href="/auth/google">Login with Google</a>
+          <Header />
           <Route path="/" exact>
             <div>
               {(this.isFetching(marketDataForHoldings) ||
