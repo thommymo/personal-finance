@@ -3,7 +3,7 @@ import AppWithData from "./data/app-with-data"
 import "../utils/global-css"
 import { holdingsWithMarketPrice } from "../data/data"
 import { connect } from "react-redux"
-import { fetchPortfolio } from "../actions"
+import { fetchPortfolio, fetchUser } from "../actions"
 import { LoadingIndicator } from "./atoms/loading-indicator"
 import { BrowserRouter, Route } from "react-router-dom"
 
@@ -28,6 +28,7 @@ class App extends Component {
         exchangeRates
       )
     )
+    dispatch(fetchUser())
   }
 
   isFetching(marketDataForHoldings) {

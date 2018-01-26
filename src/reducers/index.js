@@ -13,7 +13,7 @@ import {
   UPDATE_INVESTMENT_IN_PORTFOLIO,
   CANCEL_EDITING_INVESTMENT
 } from "../actions"
-import authReducer from "./authReducer"
+import authentication from "./authReducer"
 
 function exchangeRates(
   state = {
@@ -228,7 +228,7 @@ const reducers = {
   selection,
   marketDataForHoldings,
   portfolio,
-  auth: authReducer
+  authentication
 }
 
 export default reducers
