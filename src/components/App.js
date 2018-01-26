@@ -1,10 +1,11 @@
 import React, { Component } from "react"
-import AppWithData from './data/app-with-data'
-import '../utils/global-css'
-import { holdingsWithMarketPrice } from '../data/data'
+import AppWithData from "./data/app-with-data"
+import "../utils/global-css"
+import { holdingsWithMarketPrice } from "../data/data"
 import { connect } from "react-redux"
-import { fetchPortfolio } from '../actions'
-import { LoadingIndicator } from './atoms/loading-indicator'
+import { fetchPortfolio } from "../actions"
+import { LoadingIndicator } from "./atoms/loading-indicator"
+import { BrowserRouter, Route } from "react-router-dom"
 
 /*
 TODO:
@@ -46,17 +47,23 @@ class App extends Component {
     const { marketDataForHoldings, exchangeRates } = this.props
 
     return (
-      <div>
-        <a href="/auth/google">Login with Google</a>
-        {(this.isFetching(marketDataForHoldings) ||
-          exchangeRates.isFetching) && <LoadingIndicator />}
-        {marketDataForHoldings.error && (
-          //TODO: Make Error Messages more accurate
-          <div>{marketDataForHoldings.error.errorMessage}</div>
-        )}
-        {!this.isFetching(marketDataForHoldings) &&
-          !exchangeRates.isFetching && <AppWithData />}
-      </div>
+      <BrowserRouter>
+        <div>
+          <a href="/auth/google">Login with Google</a>
+          <Route path="/" exact>
+            <div>
+              {(this.isFetching(marketDataForHoldings) ||
+                exchangeRates.isFetching) && <LoadingIndicator />}
+              {marketDataForHoldings.error && (
+                //TODO: Make Error Messages more accurate
+                <div>{marketDataForHoldings.error.errorMessage}</div>
+              )}
+              {!this.isFetching(marketDataForHoldings) &&
+                !exchangeRates.isFetching && <AppWithData />}
+            </div>
+          </Route>
+        </div>
+      </BrowserRouter>
     )
   }
 }
